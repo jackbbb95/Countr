@@ -2,6 +2,7 @@ package com.jackbbb95.globe.countr;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Layout;
@@ -21,30 +22,27 @@ import java.util.List;
 public class CountrListFragment extends Fragment {
 
     //the ArrayAdapter
-    private CustomListViewAdapter mCountrAdapter;
+    private static ArrayList<Countr> countrArrayList;//testing data
+    private static CustomListViewAdapter mCountrAdapter;
+    private static TextView createText;
 
     public CountrListFragment() {
     }
+
+    public ArrayList<Countr> getCountrArrayList(){return countrArrayList;}
+    public CustomListViewAdapter getmCountrAdapter(){return mCountrAdapter;}
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.countr_list_fragment, container, false);
+        this.countrArrayList = new ArrayList<Countr>();
+        //Countr exampleCountr = new Countr("This Won't Appear",0,1,0); //use to fill first position in countrArrayList
+        //this.countrArrayList.add(exampleCountr);
 
-
-        ArrayList<Countr> countrArrayList = new ArrayList<Countr>();//testing data
-
-        for(int j=0; j<12; j++){
-            countrArrayList.add(j, new Countr("Counter Number: " + (j + 1), 0, 1,0));
-        }
-        //String[] stringy = new String[countrArrayList.size()-1];
-
-        //for(int j=0; j<countrArrayList.size()-1; j++){
-            //stringy[j] = countrArrayList.get(j).getName();
-
-
-
-        CustomListViewAdapter mCountrAdapter = new CustomListViewAdapter(
+        mCountrAdapter = new CustomListViewAdapter(
                 //current context
                 getActivity(),
                 //ID of the list item layout
@@ -52,12 +50,21 @@ public class CountrListFragment extends Fragment {
                 //countr object array
                 countrArrayList);
 
-        ListView listView = (ListView) rootView.findViewById(
-                R.id.listview_countr);
-        listView.setAdapter(mCountrAdapter);
+        ListView countrListView = (ListView) rootView.findViewById(R.id.listview_countr);
+        countrListView.setAdapter(mCountrAdapter);
 
+
+        createText = (TextView) rootView.findViewById(R.id.create_counter_textview);
 
         return rootView;
     }
+
+    public void noCreateCountrText(){
+        if(countrArrayList.size() > 0) {
+            createText.setVisibility(View.GONE);
+        }
+    }
+
+
 
 }

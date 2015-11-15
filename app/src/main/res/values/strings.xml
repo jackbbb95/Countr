@@ -2,4 +2,8 @@
     <string name="app_name">Countr</string>
     <string name="action_settings">Settings</string>
     <string name="name">ListViewBaseAdapter</string>
+    <string name="countr_name">Countr Name</string>
+    <string name="set_start_number">Start Counting At:</string>
+    <string name="interval_ask">Interval:</string>
+
 </resources>

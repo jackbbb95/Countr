@@ -9,9 +9,21 @@
     tools:showIn="@layout/activity_main_countr"
     tools:context=".MainCountrActivityFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:text="Create a New Countr"
+        android:layout_gravity="top|center_horizontal"
+        android:textColor="@color/primary_material_dark"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:gravity="bottom"
+        android:id="@+id/create_counter_textview"
+        android:visibility="visible" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_countr"
         android:layout_gravity="left|top" />
+
 </FrameLayout>

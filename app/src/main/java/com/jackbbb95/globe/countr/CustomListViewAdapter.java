@@ -2,10 +2,12 @@ package com.jackbbb95.globe.countr;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -35,10 +37,17 @@ public class CustomListViewAdapter extends ArrayAdapter<Countr> {
             holder.subText = (TextView) convertView.findViewById(R.id.sub_list_item_countr_textview);
             holder.mainText = (TextView) convertView.findViewById(R.id.list_item_countr_textview);
             convertView.setTag(holder);
+
         } else
             holder = (ViewHolder) convertView.getTag();
+
         holder.subText.setText(String.valueOf(countr.getCurrentNumber()));
         holder.mainText.setText(String.valueOf(countr.getName()));
+        //if(position == 0){
+            //holder.mainText.setGravity(Gravity.CENTER);
+            //holder.mainText.setText("Add a Countr");
+            //holder.subText.setText("");
+        //}
         return convertView;
     }
 

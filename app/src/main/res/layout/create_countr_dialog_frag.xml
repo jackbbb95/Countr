@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/Theme.AppCompat.Light.DialogWhenLarge"
+    android:weightSum="1">
+
+
+    <TextView
+        android:id="@+id/countr_name_ask"
+        android:text="@string/countr_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:layout_gravity="top|left"
+        android:paddingLeft="@dimen/abc_dialog_padding_material"
+        android:paddingRight="@dimen/abc_dialog_padding_material"
+        android:paddingTop="20dp" />
+
+    <EditText
+        android:id="@+id/countr_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:layout_marginLeft="@dimen/abc_dialog_padding_material" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_start_number"
+        android:id="@+id/set_start_number"
+
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:paddingLeft="@dimen/abc_dialog_padding_material"
+        android:paddingRight="@dimen/abc_dialog_padding_material"
+        android:paddingTop="20dp" />
+
+    <NumberPicker
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_number_picker"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="@dimen/abc_dialog_padding_material"
+        android:paddingRight="@dimen/abc_dialog_padding_material" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/interval_ask"
+        android:id="@+id/set_interval"
+        android:nestedScrollingEnabled="false"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:paddingLeft="@dimen/abc_dialog_padding_material"
+        android:paddingRight="@dimen/abc_dialog_padding_material"
+        android:layout_marginBottom="@dimen/abc_dialog_padding_material" />
+
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/interval_spinner"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="@dimen/abc_dialog_padding_material"
+        android:paddingRight="@dimen/abc_dialog_padding_material"
+        android:paddingBottom="@dimen/abc_dialog_padding_top_material" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginTop="@dimen/abc_dialog_padding_top_material">
+
+
+        <Button
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="14dp"
+            android:textSize="15sp"
+            android:text="Cancel"
+            android:id="@+id/cancel_button"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="bottom|right"
+            android:textAlignment="4" />
+
+        <Button
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="14dp"
+        android:textSize="15sp"
+        android:text="Create"
+        android:id="@+id/create_button"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="top|bottom|right" />
+    </LinearLayout>
+
+</LinearLayout>

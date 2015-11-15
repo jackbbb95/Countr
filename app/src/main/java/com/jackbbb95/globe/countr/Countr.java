@@ -3,8 +3,9 @@ package com.jackbbb95.globe.countr;
 public  class Countr {
     private String name;
     private int startNumber;
+    private int totalCounted;
     private int countBy;
-    private int currentNumber;
+    private int currentNumber = startNumber+totalCounted;
 
     public Countr(String name, int startNumber, int countBy, int currentNumber) {
         this.name = name;
