@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    style="@style/Theme.AppCompat.Light.DialogWhenLarge"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-
-    <TextView
-        android:id="@+id/countr_name_ask"
-        android:text="@string/countr_name"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/create_countr_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/abc_text_size_headline_material"
-        android:layout_gravity="top|left"
-        android:paddingLeft="@dimen/abc_dialog_padding_material"
-        android:paddingRight="@dimen/abc_dialog_padding_material"
-        android:paddingTop="20dp" />
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_gravity="top" />
 
-    <EditText
-        android:id="@+id/countr_name"
-        android:layout_width="200dp"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/countr_name_til"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:imeOptions="actionDone"
-        android:layout_marginLeft="@dimen/abc_dialog_padding_material" />
+        android:layout_marginTop="@dimen/abc_dialog_padding_top_material">
+        <EditText
+            android:id="@+id/countr_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:layout_marginLeft="@dimen/abc_dialog_padding_material"
+            android:inputType="textCapWords"
+            android:focusable="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,7 +59,6 @@
         android:layout_height="wrap_content"
         android:text="@string/interval_ask"
         android:id="@+id/set_interval"
-        android:nestedScrollingEnabled="false"
         android:textSize="@dimen/abc_text_size_headline_material"
         android:paddingLeft="@dimen/abc_dialog_padding_material"
         android:paddingRight="@dimen/abc_dialog_padding_material"

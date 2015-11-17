@@ -15,11 +15,13 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:id="@+id/sub_list_item_countr_textview"
         android:textSize="@dimen/abc_text_size_medium_material"
-        android:gravity="center_vertical|right">
+        android:gravity="center_vertical|right"
+        android:layout_alignParentRight="false"
+        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material">
     </TextView>
 
 </RelativeLayout>
