@@ -2,6 +2,7 @@ package com.jackbbb95.globe.countr;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import org.w3c.dom.Text;
 public class CreateCountrDialogFrag extends DialogFragment {
 
     public interface CreateCountrDialogListener{
-        Countr onFinishCreateCountr(Countr newCountr);
+        void onFinishCreateCountr(Countr newCountr);
     } //runs onFinishCountrDialog when creation is done
 
     private EditText name; //the EditText box where the user inpts the name of the Countr
@@ -35,6 +36,7 @@ public class CreateCountrDialogFrag extends DialogFragment {
     private InputMethodManager imm;
     private TextInputLayout nameTil;
     private Toolbar tb;
+
 
     public CreateCountrDialogFrag(){} //default constructor for CreateCountrDialogFrag
 
@@ -60,7 +62,6 @@ public class CreateCountrDialogFrag extends DialogFragment {
 
         //for the name of the countr
         name = (EditText) view.findViewById(R.id.countr_name);
-        name.setHint("Enter name");
         nameTil = (TextInputLayout) view.findViewById(R.id.countr_name_til);
         nameTil.setHint("Countr Name");
         name.requestFocus();
@@ -70,16 +71,17 @@ public class CreateCountrDialogFrag extends DialogFragment {
 
         //for the start number
         start = (NumberPicker)view.findViewById(R.id.start_number_picker);
-        start.setOnClickListener(new View.OnClickListener(){
+        start.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onClick(View v) {//TODO make this hide the keyboard when clicking the numberPicker
-                name.clearFocus();
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                getDialog().findViewById(R.id.focus_dummy).requestFocusFromTouch();
+                imm.hideSoftInputFromWindow(name.getWindowToken(),0);
             }
         });
         start.setMinValue(0);
         start.setMaxValue(9999);
         start.setWrapSelectorWheel(false);
+
 
         //for the interval to count by
         interval = (Spinner)view.findViewById(R.id.interval_spinner);
@@ -87,6 +89,7 @@ public class CreateCountrDialogFrag extends DialogFragment {
         ArrayAdapter<Integer> intervalAdapter = new ArrayAdapter<Integer>(getContext(),android.R.layout.simple_spinner_item,intervalChoices);
         intervalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         interval.setAdapter(intervalAdapter);
+
 
         //button to actually create the Countr
         create = (Button)view.findViewById(R.id.create_button);
@@ -99,10 +102,12 @@ public class CreateCountrDialogFrag extends DialogFragment {
                 } else {
                     String countrName = name.getText().toString();
                     int startNumber = start.getValue();
+                    int currentNumber = start.getValue();
                     int intervalNumber = Integer.parseInt(interval.getSelectedItem().toString());
                     CreateCountrDialogListener activity = (CreateCountrDialogListener) getActivity();
-                    activity.onFinishCreateCountr(new Countr(countrName, startNumber, intervalNumber, 0));
+                    activity.onFinishCreateCountr(new Countr(countrName, startNumber, intervalNumber, currentNumber, 0));
                     getDialog().dismiss();
+
                 }
 
             }
@@ -119,8 +124,5 @@ public class CreateCountrDialogFrag extends DialogFragment {
         });
         return view;
     }
-
-
-
 
 }

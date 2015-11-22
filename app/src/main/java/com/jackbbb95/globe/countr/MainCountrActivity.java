@@ -1,43 +1,47 @@
 package com.jackbbb95.globe.countr;
 
-import android.app.Dialog;
-import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MainCountrActivity extends AppCompatActivity implements CreateCountrDialogFrag.CreateCountrDialogListener {
 
     private CountrListFragment countrListFragment = new CountrListFragment(); //used to create an instance of the list of Countrs
-    private ArrayList<Countr> countrArrayList = new ArrayList<Countr>();
+    private ArrayList<Countr> countrArrayList = new ArrayList<>();
+    private ArrayList<Countr> saveArray = new ArrayList<>();
+    private DBHelper myDB;
+    private Gson gson;
+
 
     public ArrayList<Countr> getCountrArrayList(){
         return countrArrayList;
     }
+
     /*
     Runs on the creation of the MainCountrActivity(the homescreen)
     Sets the layout, an actionbar, and a fab
@@ -49,6 +53,10 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         setContentView(R.layout.activity_main_countr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+        ReadArrayList();
 
         //creates a fab that will lead to the create countr dialog
         FloatingActionButton addCountr = (FloatingActionButton) findViewById(R.id.addCountr);
@@ -67,14 +75,11 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         SaveArrayList();
     }
 
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        ReadArrayList();
-        countrListFragment.getmCountrAdapter().notifyDataSetChanged();
+    protected void onStop(){
+        super.onStop();
+        SaveArrayList();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,43 +128,59 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     @param newCountr is passed in through the listener when the 'create' button is clicked, with the set parameters
      */
     @Override
-    public Countr onFinishCreateCountr(Countr newCountr) {
+    public void onFinishCreateCountr(Countr newCountr) {
         onFinishCreateCountrDialog(newCountr.getName());
-        //countrListFragment.getmCountrAdapter().add(newCountr);
+        saveArray.add(newCountr);
         countrListFragment.getmCountrAdapter().add(newCountr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
-
         countrListFragment.getCreateText().setVisibility(View.GONE);
-        return newCountr;
 
     }
 
+    /*
+    Method used to save the arraylist on exit of the app
+     */
     public void SaveArrayList(){
-        try {
-            FileOutputStream fos = this.openFileOutput("Countrs", this.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(countrArrayList);
-            oos.flush();
-            oos.close();
-            fos.close();
+        this.deleteDatabase("CountrsDB"); //clears current database
+        ArrayList<Countr> tempArrayList = new ArrayList<Countr>();
+        for(Countr c : saveArray){
+            tempArrayList.add(c);
+
         }
-        catch(IOException e){
-            Log.e("Internal Storage", e.getMessage());
-        }
+        gson = new Gson();
+        Type type = new TypeToken<ArrayList<Countr>>() {}.getType();
+        String inputString = gson.toJson(tempArrayList,type);
+        myDB = new DBHelper(this);
+        SQLiteDatabase db = myDB.getWritableDatabase();
+        myDB.insertCountr(inputString,db); //rewrites the current Countrs into the database
+        myDB.close();
     }
 
-    public ArrayList<Countr> ReadArrayList(){
-        FileInputStream fis;
-        ArrayList<Countr> toReturn = null;
+    /*
+    Reads in the saved Countrs on creation of the activity
+     */
+    public void ReadArrayList(){
+        gson = new Gson();
+        myDB = new DBHelper(this);
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        Type type = new TypeToken<ArrayList<Countr>>() {}.getType();
+        String returnString = myDB.getCountr(db);
+        ArrayList<Countr> tempArray;
         try {
-            fis = this.openFileInput("Countrs");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            toReturn = (ArrayList<Countr>) ois.readObject();
-            ois.close();
+            if (returnString != null) {
+                tempArray = gson.fromJson(returnString, type);
+                saveArray.addAll(tempArray); //loads the temporary array onto the current saveArray
+                countrListFragment.getmCountrAdapter().addAll(saveArray /*tempArray*/); //add all to the Listview adapter
+                countrListFragment.getmCountrAdapter().notifyDataSetChanged();
+                countrListFragment.getCreateText().setVisibility(View.GONE); //Create Countr message disappear
+            }
+        }catch(Exception e) {
+            Log.d("ReadArray", e.getMessage());
         }
-        catch(Exception e){}
-    return toReturn;
+
+        myDB.close();
     }
+
 
 
 }

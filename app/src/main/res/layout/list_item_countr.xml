@@ -7,21 +7,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:id="@+id/list_item_countr_textview"
+        android:id="@+id/tv_name"
         android:gravity="left|center_vertical"
         android:textStyle="normal"
-        android:textSize="@dimen/abc_text_size_large_material">
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:textColor="@color/textColorPrimary">
     </TextView>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:id="@+id/sub_list_item_countr_textview"
+        android:id="@+id/tv_count"
         android:textSize="@dimen/abc_text_size_medium_material"
         android:gravity="center_vertical|right"
         android:layout_alignParentRight="false"
-        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material">
+        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
+        android:textColor="@color/textColorPrimary">
     </TextView>
 
 </RelativeLayout>

@@ -2,22 +2,20 @@ package com.jackbbb95.globe.countr;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class CustomListViewAdapter extends ArrayAdapter<Countr> {
+public class CountrAdapter extends ArrayAdapter<Countr> {
     Context context;
     /*
     Constructor for the adapter, extends ArrayAdapter. Sets context to this class
      */
-    public CustomListViewAdapter(Context context, int resourceID, List<Countr> items){
+    public CountrAdapter(Context context, int resourceID, List<Countr> items){
         super(context,resourceID,items);
         this.context = context;
     }
@@ -39,8 +37,8 @@ public class CustomListViewAdapter extends ArrayAdapter<Countr> {
         if(convertView == null){ //used to recycle views to save resources
             convertView = mInflater.inflate(R.layout.list_item_countr,null); //inflates the item
             holder = new ViewHolder(); //initializes holder
-            holder.subText = (TextView) convertView.findViewById(R.id.sub_list_item_countr_textview); //sets the recycled view to current items layout
-            holder.mainText = (TextView) convertView.findViewById(R.id.list_item_countr_textview);
+            holder.mainText = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.subText = (TextView) convertView.findViewById(R.id.tv_count); //sets the recycled view to current items layout
             convertView.setTag(holder);
 
         } else
