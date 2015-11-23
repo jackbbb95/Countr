@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/activity_counting"
+    tools:context="com.jackbbb95.globe.countr.Fragments.CountingActivityFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/current_number_tv"
+        android:layout_gravity="center"
+        android:textSize="@dimen/abc_text_size_display_4_material"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="@dimen/abc_text_size_display_2_material" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/add_button"
+        android:layout_gravity="center"
+        style="@style/Base.Widget.AppCompat.Button.Borderless" />
+
+</FrameLayout>

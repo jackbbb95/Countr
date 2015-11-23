@@ -1,9 +1,7 @@
-package com.jackbbb95.globe.countr;
+package com.jackbbb95.globe.countr.Activities;
 
-import android.content.ContentValues;
-import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,15 +15,12 @@ import android.view.MenuItem;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jackbbb95.globe.countr.Countr;
+import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
+import com.jackbbb95.globe.countr.Fragments.CreateCountrDialogFrag;
+import com.jackbbb95.globe.countr.Handlers.DBHelper;
+import com.jackbbb95.globe.countr.R;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -37,6 +32,9 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     private DBHelper myDB;
     private Gson gson;
 
+    public ArrayList<Countr> getSaveArray(){
+        return saveArray;
+    }
 
     public ArrayList<Countr> getCountrArrayList(){
         return countrArrayList;
@@ -72,13 +70,13 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     @Override
     protected void onPause(){
         super.onPause();
-        SaveArrayList();
+        SaveArrayList(); //save the array
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        SaveArrayList();
+        SaveArrayList(); //save the array
     }
 
     @Override
@@ -125,17 +123,40 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     Through CreateCountrDialogListener, takes newly created countr and craetes Snackbar. Adds the countr to the countrArrayList
     that the listView reads through the adapter. Adapter is refreshed to display in the listView on the homescreen
     Also hides the "Create a New Countr" message
+    Opens the Activity where the user counts
     @param newCountr is passed in through the listener when the 'create' button is clicked, with the set parameters
      */
     @Override
     public void onFinishCreateCountr(Countr newCountr) {
-        onFinishCreateCountrDialog(newCountr.getName());
+        //onFinishCreateCountrDialog(newCountr.getName());
         saveArray.add(newCountr);
         countrListFragment.getmCountrAdapter().add(newCountr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
         countrListFragment.getCreateText().setVisibility(View.GONE);
+        /*
+        Intent intent = new Intent(this,CountingActivity.class);
+        intent.putExtra("Countr",newCountr);
+        intent.putExtra("Position",)
+        startActivityForResult(intent, 1); //start the activity where the user counts
+        */
 
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            int curPos = data.getIntExtra("Position",-1);
+            Countr newCountr = (Countr)data.getSerializableExtra("NewCountr");
+            saveArray.set(curPos,newCountr);
+            countrArrayList.set(curPos,newCountr);
+            countrListFragment.getmCountrAdapter().notifyDataSetChanged();
+
+        }
+    }
+
+
+
+
 
     /*
     Method used to save the arraylist on exit of the app
@@ -149,10 +170,10 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         }
         gson = new Gson();
         Type type = new TypeToken<ArrayList<Countr>>() {}.getType();
-        String inputString = gson.toJson(tempArrayList,type);
+        String inputString = gson.toJson(tempArrayList, type);
         myDB = new DBHelper(this);
         SQLiteDatabase db = myDB.getWritableDatabase();
-        myDB.insertCountr(inputString,db); //rewrites the current Countrs into the database
+        myDB.insertCountr(inputString, db); //rewrites the current Countrs into the database
         myDB.close();
     }
 

@@ -1,4 +1,4 @@
-package com.jackbbb95.globe.countr;
+package com.jackbbb95.globe.countr.Fragments;
 
 
 import android.content.Context;
@@ -19,6 +19,9 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+
+import com.jackbbb95.globe.countr.Countr;
+import com.jackbbb95.globe.countr.R;
 
 import org.w3c.dom.Text;
 
@@ -75,7 +78,7 @@ public class CreateCountrDialogFrag extends DialogFragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 getDialog().findViewById(R.id.focus_dummy).requestFocusFromTouch();
-                imm.hideSoftInputFromWindow(name.getWindowToken(),0);
+                imm.hideSoftInputFromWindow(name.getWindowToken(), 0);
             }
         });
         start.setMinValue(0);

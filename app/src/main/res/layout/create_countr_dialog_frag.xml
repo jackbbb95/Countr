@@ -103,6 +103,7 @@
         android:height="14dp"
         android:textSize="15sp"
         android:text="Create"
+            android:onClick="startCounting"
         android:id="@+id/create_button"
             android:gravity="center_vertical|center_horizontal"
             android:layout_gravity="top|bottom|right" />
