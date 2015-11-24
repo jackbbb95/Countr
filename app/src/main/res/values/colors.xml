@@ -6,4 +6,5 @@
     <color name="textColorPrimary">#000000</color>
     <color name="windowBackground">#FAFAFA</color>
     <color name="dialogColor">#FFFFFF</color>
+    <color name="rippleColor">#E3234A</color>
 </resources>

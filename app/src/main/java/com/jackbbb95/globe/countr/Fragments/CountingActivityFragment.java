@@ -1,7 +1,5 @@
 package com.jackbbb95.globe.countr.Fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jackbbb95.globe.countr.Activities.CountingActivity;
-import com.jackbbb95.globe.countr.Activities.MainCountrActivity;
 import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.R;
 
@@ -21,7 +18,7 @@ import com.jackbbb95.globe.countr.R;
 public class CountingActivityFragment extends Fragment {
 
     private TextView countrCurrentNumber;
-    private Button add;
+    private Button countButton;
     private int num;
     private int interval;
     public CountingActivityFragment() {}
@@ -40,14 +37,25 @@ public class CountingActivityFragment extends Fragment {
         countrCurrentNumber.setText(String.valueOf(num));
 
         //For the button background which adds to the countr
-        add = (Button) rootView.findViewById(R.id.add_button);
-        add.setOnClickListener(new View.OnClickListener() {
+
+
+
+        countButton = (Button) rootView.findViewById(R.id.count_button);
+        countButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Countr tempCountr = ((CountingActivity) getActivity()).getCountr();
-                tempCountr.setCurrentNumber(tempCountr.getCurrentNumber() + interval);
-                countrCurrentNumber.setText(String.valueOf(tempCountr.getCurrentNumber()));
-                ((CountingActivity) getActivity()).updateCountr(tempCountr);
+                if(((CountingActivity) getActivity()).getSwitchFab() == false){
+                    Countr tempCountr = ((CountingActivity) getActivity()).getCountr();
+                    tempCountr.setCurrentNumber(tempCountr.getCurrentNumber() + interval);
+                    countrCurrentNumber.setText(String.valueOf(tempCountr.getCurrentNumber()));
+                    ((CountingActivity) getActivity()).updateCountr(tempCountr);
+                }
+                else{
+                    Countr tempCountr = ((CountingActivity) getActivity()).getCountr();
+                    tempCountr.setCurrentNumber(tempCountr.getCurrentNumber() - interval);
+                    countrCurrentNumber.setText((String.valueOf(tempCountr.getCurrentNumber())));
+                    ((CountingActivity) getActivity()).updateCountr(tempCountr);
+                }
 
             }
         });
