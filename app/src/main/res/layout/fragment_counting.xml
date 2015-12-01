@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_counting"
-    tools:context="com.jackbbb95.globe.countr.Fragments.CountingActivityFragment">
+    tools:context="com.jackbbb95.globe.countr.Fragments.CountingActivityFragment"
+    android:id="@+id/counting_activity_frag">
 
 
     <TextView

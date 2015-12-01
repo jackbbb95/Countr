@@ -31,6 +31,9 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     private ArrayList<Countr> saveArray = new ArrayList<>();
     private DBHelper myDB;
     private Gson gson;
+    private FloatingActionButton addCountr;
+
+    public FloatingActionButton getAddCountr(){return addCountr;}
 
     public ArrayList<Countr> getSaveArray(){
         return saveArray;
@@ -51,13 +54,11 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         setContentView(R.layout.activity_main_countr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-        ReadArrayList();
+        readArrayList();
 
         //creates a fab that will lead to the create countr dialog
-        FloatingActionButton addCountr = (FloatingActionButton) findViewById(R.id.addCountr);
+        addCountr = (FloatingActionButton) findViewById(R.id.addCountr);
+
         //on click, shows the CreateCountrDialog
         addCountr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +71,13 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     @Override
     protected void onPause(){
         super.onPause();
-        SaveArrayList(); //save the array
+        saveArrayList(); //save the array
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-        SaveArrayList(); //save the array
+        saveArrayList(); //save the array
     }
 
     @Override
@@ -113,7 +114,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     /*
     Displays a Snackbar noting that the Countr has been created
     @param name is retrieved from the newly created countr to be displayed in the snackbar
-    //TODO make this transition to a new activity in which the counting can actually be handled
+
      */
     public void onFinishCreateCountrDialog(String name){
         Snackbar.make(this.findViewById(R.id.listview_countr), "Countr '" + name + "' created", Snackbar.LENGTH_SHORT).show();
@@ -161,7 +162,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     /*
     Method used to save the arraylist on exit of the app
      */
-    public void SaveArrayList(){
+    public void saveArrayList(){
         this.deleteDatabase("CountrsDB"); //clears current database
         ArrayList<Countr> tempArrayList = new ArrayList<Countr>();
         for(Countr c : saveArray){
@@ -180,7 +181,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     /*
     Reads in the saved Countrs on creation of the activity
      */
-    public void ReadArrayList(){
+    public void readArrayList(){
         gson = new Gson();
         myDB = new DBHelper(this);
         SQLiteDatabase db = myDB.getReadableDatabase();
@@ -203,5 +204,11 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     }
 
 
+    public void deleteCountr(Countr countr){
+        saveArray.remove(countr);
+        countrListFragment.getmCountrAdapter().remove(countr);
+        countrListFragment.getmCountrAdapter().notifyDataSetChanged();
+        countrListFragment.getCreateText().setVisibility(View.GONE);
+    }
 
 }

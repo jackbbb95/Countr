@@ -1,11 +1,15 @@
 package com.jackbbb95.globe.countr.Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jackbbb95.globe.countr.Activities.CountingActivity;
@@ -21,7 +25,10 @@ public class CountingActivityFragment extends Fragment {
     private Button countButton;
     private int num;
     private int interval;
+
+
     public CountingActivityFragment() {}
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,9 +44,6 @@ public class CountingActivityFragment extends Fragment {
         countrCurrentNumber.setText(String.valueOf(num));
 
         //For the button background which adds to the countr
-
-
-
         countButton = (Button) rootView.findViewById(R.id.count_button);
         countButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,5 +66,7 @@ public class CountingActivityFragment extends Fragment {
 
         return rootView;
     }
+
+
 
 }

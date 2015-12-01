@@ -1,6 +1,7 @@
 package com.jackbbb95.globe.countr.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.jackbbb95.globe.countr.Countr;
+import com.jackbbb95.globe.countr.Fragments.CountingActivityFragment;
 import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
 import com.jackbbb95.globe.countr.R;
 
@@ -35,11 +37,21 @@ public class CountingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, curCountr.getName(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(!switchFab) {
+                    Snackbar.make(view, "Counting Down", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    fab.setImageResource(android.R.drawable.arrow_down_float);
+                }
+                if (switchFab) {
+                    Snackbar.make(view, "Counting Up", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    fab.setImageResource(android.R.drawable.arrow_up_float);
+                }
+                /*
                 fab.setScaleType(ImageView.ScaleType.MATRIX);
                 matrix.postRotate((float) 90,42,42);
                 fab.setImageMatrix(matrix);
+                */
                 switchFab = !switchFab;
 
             }
