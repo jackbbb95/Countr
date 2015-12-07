@@ -2,9 +2,11 @@ package com.jackbbb95.globe.countr.Fragments;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
+
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +34,14 @@ public class CreateCountrDialogFrag extends DialogFragment {
     } //runs onFinishCountrDialog when creation is done
 
     private EditText name; //the EditText box where the user inpts the name of the Countr
-    private NumberPicker start; //the Number Picker where the user chooses the start number
-    private Spinner interval; //the Spinner that gives choices of intervals to count by
+    private EditText startNum; //the EditText where the user chooses the startNum number
+    private EditText interval; //the EditText that gives choices of intervals to count by
     private Button create; //the button to create the Countr
     private Button cancel; //the button to close the dialog without creating the Countr
     private InputMethodManager imm;
     private TextInputLayout nameTil;
+    private TextInputLayout startNumTil;
+    private TextInputLayout intervalTil;
     private Toolbar tb;
 
 
@@ -47,11 +51,11 @@ public class CreateCountrDialogFrag extends DialogFragment {
     @Override
     public void onStart(){
         super.onStart();
-        int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.WRAP_CONTENT;
         getDialog().getWindow().setLayout(width,height);
 
-    } //On the start of the dialog creation, sets the size of the dialog box
+    } //On the startNum of the dialog creation, sets the size of the dialog box
 
     /*
     Brings up the dialog that asks the user to input parameters that are fed to a new Countr Object
@@ -72,27 +76,20 @@ public class CreateCountrDialogFrag extends DialogFragment {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY); //show keyboard
 
 
-        //for the start number
-        start = (NumberPicker)view.findViewById(R.id.start_number_picker);
-        start.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                getDialog().findViewById(R.id.focus_dummy).requestFocusFromTouch();
-                imm.hideSoftInputFromWindow(name.getWindowToken(), 0);
-            }
-        });
-        start.setMinValue(0);
-        start.setMaxValue(9999);
-        start.setWrapSelectorWheel(false);
+        //for the startNum number
+        startNum = (EditText)view.findViewById(R.id.countr_start_num);
+        startNumTil =(TextInputLayout) view.findViewById(R.id.countr_start_til);
+        startNumTil.setHint("Starting Number");
+        startNum.setInputType(InputType.TYPE_CLASS_NUMBER);
+        imm.showSoftInput((startNum), InputMethodManager.SHOW_IMPLICIT);
 
 
         //for the interval to count by
-        interval = (Spinner)view.findViewById(R.id.interval_spinner);
-        Integer[] intervalChoices = new Integer[]{1,2,5,10,15,20,100,1000};
-        ArrayAdapter<Integer> intervalAdapter = new ArrayAdapter<Integer>(getContext(),android.R.layout.simple_spinner_item,intervalChoices);
-        intervalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        interval.setAdapter(intervalAdapter);
-
+        interval = (EditText)view.findViewById(R.id.countr_interval);
+        intervalTil = (TextInputLayout) view.findViewById(R.id.countr_interval_til);
+        intervalTil.setHint("Count Interval");
+        interval.setInputType(InputType.TYPE_CLASS_NUMBER);
+        imm.showSoftInput((interval), InputMethodManager.SHOW_IMPLICIT);
 
         //button to actually create the Countr
         create = (Button)view.findViewById(R.id.create_button);
@@ -102,15 +99,29 @@ public class CreateCountrDialogFrag extends DialogFragment {
                 if (name.length() < 1) {
                     Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
                     name.startAnimation(shake);
+                } else if (!TextUtils.isDigitsOnly(startNum.getText())) {
+                    Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
+                    startNum.startAnimation(shake);
+                } else if (!TextUtils.isDigitsOnly(interval.getText())) {
+                    Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
+                    interval.startAnimation(shake);
                 } else {
+                    int startAndCurNumber;
+                    int intervalNumber;
                     String countrName = name.getText().toString();
-                    int startNumber = start.getValue();
-                    int currentNumber = start.getValue();
-                    int intervalNumber = Integer.parseInt(interval.getSelectedItem().toString());
+                    if (startNum.getText().length() == 0) {
+                        startAndCurNumber = 0;
+                    } else {
+                        startAndCurNumber = Integer.parseInt(startNum.getText().toString());
+                    }
+                    if (interval.getText().length() == 0) {
+                        intervalNumber = 1;
+                    } else {
+                        intervalNumber = Integer.parseInt(interval.getText().toString());
+                    }
                     CreateCountrDialogListener activity = (CreateCountrDialogListener) getActivity();
-                    activity.onFinishCreateCountr(new Countr(countrName, startNumber, intervalNumber, currentNumber, 0));
+                    activity.onFinishCreateCountr(new Countr(countrName, startAndCurNumber, intervalNumber, startAndCurNumber, 0));
                     getDialog().dismiss();
-
                 }
 
             }

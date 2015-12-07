@@ -24,4 +24,9 @@
         android:layout_gravity="center"
         style="@style/Base.Widget.AppCompat.Button.Borderless" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:id="@+id/interval_pop" />
 </FrameLayout>

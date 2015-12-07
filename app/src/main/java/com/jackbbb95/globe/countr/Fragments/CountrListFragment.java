@@ -3,7 +3,6 @@ package com.jackbbb95.globe.countr.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,8 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,9 +42,7 @@ public class CountrListFragment extends Fragment {
     private DialogPlus editOrDeleteDialog;
     ListView countrListView;
 
-
     public CountrListFragment() {} //default constructor
-
 
     public CountrAdapter getmCountrAdapter(){return mCountrAdapter;} //returns the Adapter for the ArrayList
     public TextView getCreateText(){return createText;}
@@ -60,7 +55,7 @@ public class CountrListFragment extends Fragment {
     "Create a New Countr" message
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.countr_list_fragment, container, false); //sets the CountrList to inflate
 
         countrArrayList = ((MainCountrActivity)getActivity()).getCountrArrayList(); //creates the ArrayList for the Countrs
@@ -89,25 +84,29 @@ public class CountrListFragment extends Fragment {
                 beforeCount = false;
                 Countr countr = (Countr) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(getActivity(),CountingActivity.class);
-                intent.putExtra("Countr",countr);
+                intent.putExtra("Countr", countr);
                 intent.putExtra("Position",position);
                 startActivityForResult(intent, 1);
             }
         });
 
+        final View header = inflater.inflate(R.layout.header,null);
+
         //Action on the long click of an item in the listview
         countrListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO Create Dialog that you choose to eit or delete the item
+                TextView theHeader = (TextView) header.findViewById(R.id.header);
                 final Countr countr = (Countr) parent.getAdapter().getItem(position);
+                theHeader.setText(countr.getName());
                 ArrayAdapter<String> editOrDeleteAdapter = new ArrayAdapter<String>(getActivity(),R.layout.edit_delete_dialog_list_item);
-                editOrDeleteAdapter.add("Edit Countr");
-                editOrDeleteAdapter.add("Reset Countr");
-                editOrDeleteAdapter.add("Delete Countr");
+                editOrDeleteAdapter.add("Edit");
+                editOrDeleteAdapter.add("Reset");
+                editOrDeleteAdapter.add("Delete");
 
                 //setup the dialog for when the user longclicks on an item
                 editOrDeleteDialog = DialogPlus.newDialog(getContext())
+                        .setHeader(header)
                         .setGravity(Gravity.BOTTOM)
                         .setAdapter(editOrDeleteAdapter)
                         .setOnItemClickListener(new OnItemClickListener() {
@@ -115,20 +114,20 @@ public class CountrListFragment extends Fragment {
                             public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
                                 //For when the user clicks the edit option
                                 //Creates popup where the user can edit the countr
-                                if(position == 0){
-                                    Snackbar.make(getActivity().findViewById(R.id.listview_countr), "Edit " + countr.getName(), Snackbar.LENGTH_SHORT).show();
-                                    dialog.dismiss();
+                                if(position == 1){
+                                    showEditCountrDialog(countr);
+
+                                    //Snackbar.make(getActivity().findViewById(R.id.listview_countr), "Edit " + countr.getName(), Snackbar.LENGTH_SHORT).show();
+                                    //dialog.dismiss();
                                 }
                                 //For when the user clicks reset
                                 //Sets the countr to 0
-                                else if(position == 1){
-                                    countr.setCurrentNumber(0);
-                                    mCountrAdapter.notifyDataSetChanged();
-                                    dialog.dismiss();
+                                else if(position == 2){
+                                    resetCountr(countr);
                                 }
                                 //For if the User clicks Delete
                                 //Popup Dialo asking if sure
-                                else if(position == 2){
+                                else if(position == 3){
                                     deleteCountr(countr);
                                 }
                             }
@@ -145,14 +144,19 @@ public class CountrListFragment extends Fragment {
         countrListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                ((MainCountrActivity) getActivity()).getAddCountr().show();
+                if(scrollState == SCROLL_STATE_IDLE){
+                    ((MainCountrActivity)getActivity()).getAddCountr().show();
+                }else if(scrollState == SCROLL_STATE_TOUCH_SCROLL && countrArrayList.size()>9
+                        || scrollState == SCROLL_STATE_FLING && countrArrayList.size()>9){
+                    ((MainCountrActivity)getActivity()).getAddCountr().hide();
+                }
+
+
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem != 0){
-                    ((MainCountrActivity)getActivity()).getAddCountr().hide();
-                }
+
             }
         });
 
@@ -160,6 +164,9 @@ public class CountrListFragment extends Fragment {
         return rootView; //inflates CountrList
     }
 
+    /*
+    Retrieves the new countr and sets it to the correct position in the saveArray
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getActivity().RESULT_OK) {
@@ -177,11 +184,39 @@ public class CountrListFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
     }
 
+
+    //reset the countr to 0, with warning dialog
+    private void resetCountr(final Countr resetThis) {
+        AlertDialog confirmReset = new AlertDialog.Builder(getActivity()).create();
+        confirmReset.setTitle("Reset?");
+        confirmReset.setMessage("Are you sure you want to reset " + resetThis.getName() + " ?");
+        confirmReset.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        resetThis.setCurrentNumber(0); //RESETS COUNTR TO 0
+                        mCountrAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        editOrDeleteDialog.dismiss();
+                        Snackbar.make(getActivity().findViewById(R.id.listview_countr), resetThis.getName() + " has been reset", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+        confirmReset.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editOrDeleteDialog.dismiss();
+                        dialog.dismiss();
+                    }
+                });
+        confirmReset.show();
+    }
+    //delete the countr, with warning dialog
     public void deleteCountr(final Countr deleteThis){
-        AlertDialog confirmCancel = new AlertDialog.Builder(getActivity()).create();
-        confirmCancel.setTitle("Delete?");
-        confirmCancel.setMessage("Are you sure you want to delete " + deleteThis.getName() + " ?");
-        confirmCancel.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+        AlertDialog confirmDelete = new AlertDialog.Builder(getActivity()).create();
+        confirmDelete.setTitle("Delete?");
+        confirmDelete.setMessage("Are you sure you want to delete " + deleteThis.getName() + " ?");
+        confirmDelete.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -190,9 +225,10 @@ public class CountrListFragment extends Fragment {
                         mCountrAdapter.notifyDataSetChanged();
                         dialog.dismiss();
                         editOrDeleteDialog.dismiss();
+                        Snackbar.make(getActivity().findViewById(R.id.listview_countr), deleteThis.getName() + " has been deleted", Snackbar.LENGTH_SHORT).show();
                     }
                 });
-        confirmCancel.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+        confirmDelete.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -200,11 +236,18 @@ public class CountrListFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-        confirmCancel.show();
+        confirmDelete.show();
     }
 
-    public void editCountr(Countr countr){
-
+    /*
+    Shows the dialog that allows the user to edit
+     */
+    public void showEditCountrDialog(Countr countr){
+        EditCountrDialogFrag ec = new EditCountrDialogFrag();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Countr", countr);
+        ec.setArguments(bundle);
+        ec.show(getFragmentManager(), "edit_countr_dialog");
+        editOrDeleteDialog.dismiss();
     }
-
 }

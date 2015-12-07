@@ -134,12 +134,6 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         countrListFragment.getmCountrAdapter().add(newCountr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
         countrListFragment.getCreateText().setVisibility(View.GONE);
-        /*
-        Intent intent = new Intent(this,CountingActivity.class);
-        intent.putExtra("Countr",newCountr);
-        intent.putExtra("Position",)
-        startActivityForResult(intent, 1); //start the activity where the user counts
-        */
 
     }
 
@@ -148,6 +142,8 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         if(resultCode == RESULT_OK){
             int curPos = data.getIntExtra("Position",-1);
             Countr newCountr = (Countr)data.getSerializableExtra("NewCountr");
+            //Bundle receiveArgs = data.getBundleExtra("BUNDLE");
+            //saveArray = (ArrayList<Countr>) receiveArgs.getSerializable("ARRAYLIST");
             saveArray.set(curPos,newCountr);
             countrArrayList.set(curPos,newCountr);
             countrListFragment.getmCountrAdapter().notifyDataSetChanged();
@@ -203,12 +199,12 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         myDB.close();
     }
 
-
+/*
     public void deleteCountr(Countr countr){
         saveArray.remove(countr);
         countrListFragment.getmCountrAdapter().remove(countr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
         countrListFragment.getCreateText().setVisibility(View.GONE);
     }
-
+*/
 }

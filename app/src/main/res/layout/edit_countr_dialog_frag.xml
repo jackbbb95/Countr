@@ -20,12 +20,12 @@
 
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/countr_name_til"
+        android:id="@+id/edit_name_til"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/abc_dialog_padding_top_material">
         <EditText
-            android:id="@+id/countr_name"
+            android:id="@+id/edit_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
@@ -35,32 +35,28 @@
 
     </android.support.design.widget.TextInputLayout>
 
-
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/countr_start_til"
+        android:id="@+id/cur_num_til"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/abc_dialog_padding_top_material">
         <EditText
-            android:id="@+id/countr_start_num"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
-            android:focusable="true" />
-
+            android:focusable="true"
+            android:id="@+id/curNumET" />
     </android.support.design.widget.TextInputLayout>
 
-
-
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/countr_interval_til"
+        android:id="@+id/edit_interval_til"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/abc_dialog_padding_top_material">
         <EditText
-            android:id="@+id/countr_interval"
+            android:id="@+id/edit_interval"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
@@ -96,7 +92,7 @@
         android:layout_height="wrap_content"
         android:height="14dp"
         android:textSize="15sp"
-        android:text="Create"
+        android:text="Save"
             android:onClick="startCounting"
         android:id="@+id/create_button"
             android:gravity="center_vertical|center_horizontal"
