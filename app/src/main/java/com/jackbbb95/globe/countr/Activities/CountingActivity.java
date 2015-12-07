@@ -1,28 +1,34 @@
 package com.jackbbb95.globe.countr.Activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.Fragments.CountingActivityFragment;
 import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
 import com.jackbbb95.globe.countr.R;
 
+import java.util.List;
+
+
 public class CountingActivity extends AppCompatActivity {
 
-    private Countr curCountr;
+    private static Countr curCountr;
     private int curPos;
     private boolean switchFab = false;
-    private CountingActivityFragment frag;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +38,21 @@ public class CountingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.counting_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(curCountr.getName());
+        final Context context = this;
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.counting_fab);
+        fab = (FloatingActionButton) findViewById(R.id.counting_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!switchFab) {
-                    Snackbar.make(view, "Counting Down", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    fab.setImageResource(android.R.drawable.arrow_down_float);
-                }
                 if (switchFab) {
                     Snackbar.make(view, "Counting Up", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    fab.setImageResource(android.R.drawable.arrow_up_float);
+                    fab.setImageResource(R.drawable.ic_countr_plus);
+                }
+                if (!switchFab) {
+                    Snackbar.make(view, "Counting Down", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    fab.setImageResource(R.drawable.ic_countr_minus);
                 }
 
                 switchFab = !switchFab;
@@ -53,6 +60,18 @@ public class CountingActivity extends AppCompatActivity {
             }
         });
 
+        final TextView curNum = getVisibleFragment().getCountrCurrentNumber();
+        final TextView pops = getVisibleFragment().getIntervalPop();
+        getVisibleFragment().getCountButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!getSwitchFab()) {
+                    curCountr.count(true, curNum, pops, context);
+                } else { //if the fab is in the subtracting position, count down by interval(with popup)
+                    curCountr.count(false, curNum, pops, context);
+                }
+            }
+        });
 
         giveResult();
     }
@@ -61,7 +80,7 @@ public class CountingActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
-        //SaveArray();
+
     }
 
 
@@ -91,27 +110,52 @@ public class CountingActivity extends AppCompatActivity {
         return curCountr;
     }
 
-    public void updateCountr(Countr countr) {
+    public static void updateCountr(Countr countr) {
         curCountr = countr;
     }
 
 
+    /*
+    Change count with volume keys
+     */
     @Override
-    public boolean onKeyDown(int keyCode,KeyEvent event){
-        if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
-            frag = new CountingActivityFragment();
-            frag.countUp();
-            return true;
-        } //TODO FIX VOLUME KEY IMPLEMENTATION
-        if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
-            frag = new CountingActivityFragment();
-            frag.countDown();
-            return true;
+    public boolean dispatchKeyEvent(KeyEvent event){
+        int keyCode = event.getKeyCode();
+        int action = event.getAction();
+        TextView curNum = getVisibleFragment().getCountrCurrentNumber();
+        TextView pops = getVisibleFragment().getIntervalPop();
+        switch(keyCode){
+            case KeyEvent.KEYCODE_VOLUME_UP:{
+                if(action == KeyEvent.ACTION_DOWN){
+                    curCountr.count(true, curNum, pops, this);
+                    fab.setImageResource(R.drawable.ic_countr_plus);
+                    switchFab = false;
+                }
+                return true;
+            }
+            case KeyEvent.KEYCODE_VOLUME_DOWN:{
+                if(action == KeyEvent.ACTION_DOWN){
+                    curCountr.count(false, curNum, pops, this);
+                    fab.setImageResource(R.drawable.ic_countr_minus);
+                    switchFab = true;
+                }
+                return true;
+            }
+            default: return super.dispatchKeyEvent(event);
         }
-        return super.onKeyDown(keyCode,event);
+
     }
 
-
+    //Get the active fragment
+    public CountingActivityFragment getVisibleFragment(){
+        FragmentManager fragmentManager = CountingActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for(Fragment fragment : fragments){
+            if(fragment != null && fragment.getUserVisibleHint())
+                return (CountingActivityFragment)fragment;
+        }
+        return null;
+    }
 
 }
 

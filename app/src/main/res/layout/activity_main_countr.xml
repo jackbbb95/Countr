@@ -27,7 +27,7 @@
     <android.support.design.widget.FloatingActionButton android:id="@+id/addCountr"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_countr_plus"
         android:tint="#ffffff" />
 
     <include layout="@layout/content_main_countr" />
