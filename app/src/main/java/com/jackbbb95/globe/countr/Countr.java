@@ -1,9 +1,18 @@
 package com.jackbbb95.globe.countr;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.widget.TextView;
+
+import com.jackbbb95.globe.countr.Activities.CountingActivity;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public  class Countr implements Serializable{
     private String name; //holds the name of the countr
@@ -33,5 +42,45 @@ public  class Countr implements Serializable{
     public void setCurrentNumber(int newCurrentNumber){this.currentNumber = newCurrentNumber;}
 
 
+    public void count(boolean addOrSubtract,TextView curNum,TextView pops,Context context){
+        final Random r = new Random();
+        //setup fade animation for interval popup
+        final AlphaAnimation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+        fadeOut.setDuration(700);
+        fadeOut.setFillAfter(true);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
+        display.getMetrics(metrics);
+        int displayWidth = metrics.widthPixels;
+        int displayHeight = metrics.heightPixels;
+
+
+        if(addOrSubtract){
+            currentNumber = getCurrentNumber() + getCountBy();
+            curNum.setText(String.valueOf(currentNumber));
+            CountingActivity.updateCountr(this);
+            //For the interval Popup
+            pops.setText("+" + countBy);
+        }
+        if(!addOrSubtract){
+            currentNumber = getCurrentNumber() - getCountBy();
+            curNum.setText(String.valueOf(currentNumber));
+            CountingActivity.updateCountr(this);
+            //For the interval Popup
+            pops.setText("-" + countBy);
+        }
+
+        float randWidth = 150 + r.nextFloat() * (displayWidth - (float) (displayWidth / 4));
+        float randHeight = 200 + r.nextFloat() * (displayHeight - (float) (displayHeight / 3));
+        while (randWidth > displayWidth / 2.9 && randWidth < displayWidth / 1.3
+                && randHeight > displayHeight / 2.7 && randHeight < displayHeight / 1.5) {
+            randHeight = 200 + r.nextFloat() * (displayHeight - (float) (displayHeight / 3));
+            randWidth = 150 + r.nextFloat() * (displayWidth - (float) (displayWidth / 4));
+        }
+        pops.setY(randHeight);
+        pops.setX(randWidth);
+        pops.startAnimation(fadeOut);
+    }
 
 }

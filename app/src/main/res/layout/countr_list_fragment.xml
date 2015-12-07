@@ -19,10 +19,14 @@
         android:id="@+id/create_counter_textview"
         android:visibility="visible" />
 
+
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listview_countr"
         android:layout_gravity="left|top" />
 
+
 </FrameLayout>
+

@@ -1,4 +1,4 @@
-package com.jackbbb95.globe.countr;
+package com.jackbbb95.globe.countr.Handlers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.jackbbb95.globe.countr.Countr;
+import com.jackbbb95.globe.countr.R;
 
 import java.util.List;
 
