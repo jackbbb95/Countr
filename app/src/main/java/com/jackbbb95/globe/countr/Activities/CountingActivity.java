@@ -1,10 +1,13 @@
 package com.jackbbb95.globe.countr.Activities;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,12 +31,21 @@ public class CountingActivity extends AppCompatActivity {
     private static Countr curCountr;
     private int curPos;
     private boolean switchFab = false;
-    FloatingActionButton fab;
+    private int useHardwareButtons;
+    private FloatingActionButton fab;
+
+    public boolean getSwitchFab() {
+        return switchFab;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counting);
+        SharedPreferences countrPrefs = getSharedPreferences("countrPrefs", Activity.MODE_PRIVATE);
+
+        useHardwareButtons = countrPrefs.getInt("useHB",0); //import settings prefs
+
         getCountr(); //gets the relevant countr through the intent
         Toolbar toolbar = (Toolbar) findViewById(R.id.counting_toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +85,14 @@ public class CountingActivity extends AppCompatActivity {
             }
         });
 
+
+
         giveResult();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 
     @Override
@@ -84,9 +103,7 @@ public class CountingActivity extends AppCompatActivity {
     }
 
 
-    public boolean getSwitchFab() {
-        return switchFab;
-    }
+
 
     public void giveResult() {
         Intent activityIntent = new Intent(this, MainCountrActivity.class);
@@ -120,30 +137,33 @@ public class CountingActivity extends AppCompatActivity {
      */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event){
-        int keyCode = event.getKeyCode();
-        int action = event.getAction();
-        TextView curNum = getVisibleFragment().getCountrCurrentNumber();
-        TextView pops = getVisibleFragment().getIntervalPop();
-        switch(keyCode){
-            case KeyEvent.KEYCODE_VOLUME_UP:{
-                if(action == KeyEvent.ACTION_DOWN){
-                    curCountr.count(true, curNum, pops, this);
-                    fab.setImageResource(R.drawable.ic_countr_plus);
-                    switchFab = false;
+        if(useHardwareButtons == 2 || useHardwareButtons == 0){ //if first use or if setting for hardware buttons is true
+            int keyCode = event.getKeyCode();
+            int action = event.getAction();
+            TextView curNum = getVisibleFragment().getCountrCurrentNumber();
+            TextView pops = getVisibleFragment().getIntervalPop();
+            switch(keyCode){
+                case KeyEvent.KEYCODE_VOLUME_UP:{
+                    if(action == KeyEvent.ACTION_DOWN){
+                        curCountr.count(true, curNum, pops, this);
+                        fab.setImageResource(R.drawable.ic_countr_plus);
+                        switchFab = false;
+                    }
+                    return true;
                 }
-                return true;
-            }
-            case KeyEvent.KEYCODE_VOLUME_DOWN:{
-                if(action == KeyEvent.ACTION_DOWN){
-                    curCountr.count(false, curNum, pops, this);
-                    fab.setImageResource(R.drawable.ic_countr_minus);
-                    switchFab = true;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:{
+                    if(action == KeyEvent.ACTION_DOWN){
+                        curCountr.count(false, curNum, pops, this);
+                        fab.setImageResource(R.drawable.ic_countr_minus);
+                        switchFab = true;
+                    }
+                    return true;
                 }
-                return true;
+                default: return super.dispatchKeyEvent(event);
             }
-            default: return super.dispatchKeyEvent(event);
         }
 
+        return super.dispatchKeyEvent(event);
     }
 
     //Get the active fragment

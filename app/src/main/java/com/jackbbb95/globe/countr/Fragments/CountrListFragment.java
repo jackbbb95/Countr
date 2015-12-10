@@ -3,6 +3,7 @@ package com.jackbbb95.globe.countr.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -59,7 +60,7 @@ public class CountrListFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.countr_list_fragment, container, false); //sets the CountrList to inflate
 
         countrArrayList = ((MainCountrActivity)getActivity()).getCountrArrayList(); //creates the ArrayList for the Countrs
-
+        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto.light.ttf");
         mCountrAdapter = new CountrAdapter( //creates the adapter
                 //current context
                 getActivity(),
@@ -72,7 +73,7 @@ public class CountrListFragment extends Fragment {
         countrListView.setAdapter(mCountrAdapter);//sets the adapter to the ListView
         countrListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         createText = (TextView) rootView.findViewById(R.id.create_counter_textview); //shows the "Create a New Countr" message for when there is no Countr
-
+        createText.setTypeface(robotoLight);
 
 
 
@@ -115,10 +116,8 @@ public class CountrListFragment extends Fragment {
                                 //For when the user clicks the edit option
                                 //Creates popup where the user can edit the countr
                                 if(position == 1){
+                                    editOrDeleteDialog.dismiss();
                                     showEditCountrDialog(countr);
-
-                                    //Snackbar.make(getActivity().findViewById(R.id.listview_countr), "Edit " + countr.getName(), Snackbar.LENGTH_SHORT).show();
-                                    //dialog.dismiss();
                                 }
                                 //For when the user clicks reset
                                 //Sets the countr to 0
@@ -248,6 +247,5 @@ public class CountrListFragment extends Fragment {
         bundle.putSerializable("Countr", countr);
         ec.setArguments(bundle);
         ec.show(getFragmentManager(), "edit_countr_dialog");
-        editOrDeleteDialog.dismiss();
     }
 }

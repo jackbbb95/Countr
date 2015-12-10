@@ -2,6 +2,7 @@ package com.jackbbb95.globe.countr.Handlers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +40,12 @@ public class CountrAdapter extends ArrayAdapter<Countr> {
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if(convertView == null){ //used to recycle views to save resources
             convertView = mInflater.inflate(R.layout.list_item_countr,null); //inflates the item
+            Typeface robotoLight = Typeface.createFromAsset(getContext().getAssets(),"fonts/roboto.light.ttf");
             holder = new ViewHolder(); //initializes holder
             holder.mainText = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.mainText.setTypeface(robotoLight);
             holder.subText = (TextView) convertView.findViewById(R.id.tv_count); //sets the recycled view to current items layout
+            holder.subText.setTypeface(robotoLight);
             convertView.setTag(holder);
 
         } else

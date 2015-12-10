@@ -96,6 +96,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this,SettingsActivity.class));
             return true;
         }
 
@@ -122,14 +123,14 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
     /*
     Through CreateCountrDialogListener, takes newly created countr and craetes Snackbar. Adds the countr to the countrArrayList
-    that the listView reads through the adapter. Adapter is refreshed to display in the listView on the homescreen
+//    that the listView reads through the adapter. Adapter is refreshed to display in the listView on the homescreen
     Also hides the "Create a New Countr" message
     Opens the Activity where the user counts
     @param newCountr is passed in through the listener when the 'create' button is clicked, with the set parameters
      */
     @Override
     public void onFinishCreateCountr(Countr newCountr) {
-        //onFinishCreateCountrDialog(newCountr.getName());
+        onFinishCreateCountrDialog(newCountr.getName());
         saveArray.add(newCountr);
         countrListFragment.getmCountrAdapter().add(newCountr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
@@ -142,17 +143,16 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         if(resultCode == RESULT_OK){
             int curPos = data.getIntExtra("Position",-1);
             Countr newCountr = (Countr)data.getSerializableExtra("NewCountr");
-            //Bundle receiveArgs = data.getBundleExtra("BUNDLE");
-            //saveArray = (ArrayList<Countr>) receiveArgs.getSerializable("ARRAYLIST");
             saveArray.set(curPos,newCountr);
             countrArrayList.set(curPos,newCountr);
-            countrListFragment.getmCountrAdapter().notifyDataSetChanged();
-
+            updateList();
         }
     }
 
 
-
+    public void updateList(){
+        countrListFragment.getmCountrAdapter().notifyDataSetChanged();
+    }
 
 
     /*
@@ -199,12 +199,5 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         myDB.close();
     }
 
-/*
-    public void deleteCountr(Countr countr){
-        saveArray.remove(countr);
-        countrListFragment.getmCountrAdapter().remove(countr);
-        countrListFragment.getmCountrAdapter().notifyDataSetChanged();
-        countrListFragment.getCreateText().setVisibility(View.GONE);
-    }
-*/
 }
+//TODO Work through the UI and brainstorm other features that could be included

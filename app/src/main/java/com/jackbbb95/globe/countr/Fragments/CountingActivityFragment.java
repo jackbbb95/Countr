@@ -2,6 +2,7 @@ package com.jackbbb95.globe.countr.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -49,8 +50,11 @@ public class CountingActivityFragment extends Fragment {
         theCountr = ((CountingActivity)getActivity()).getCountr();
         //For the Current Count Number
         countrCurrentNumber = (TextView) rootView.findViewById(R.id.current_number_tv);
+        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto.light.ttf");
+        countrCurrentNumber.setTypeface(robotoLight);
         countrCurrentNumber.setText(String.valueOf(theCountr.getCurrentNumber()));
         intervalPop = (TextView) rootView.findViewById(R.id.interval_pop);
+        intervalPop.setTypeface(robotoLight);
         //For the button background which adds to the countr
         countButton = (Button) rootView.findViewById(R.id.count_button);
 

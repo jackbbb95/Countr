@@ -12,17 +12,16 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.jackbbb95.globe.countr.Activities.MainCountrActivity;
 import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.R;
 
@@ -236,6 +235,7 @@ public class EditCountrDialogFrag extends DialogFragment {
                             curCountr.setCountBy(Integer.parseInt(interval.getText().toString()));
                         }
                     }
+                    ((MainCountrActivity)getActivity()).updateList();
                     getDialog().dismiss();
                 }
             }

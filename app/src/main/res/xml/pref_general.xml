@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_header_general">
+        <SwitchPreference
+            android:key="hardware_buttons"
+            android:title="@string/pref_title_hardware_buttons"
+            android:summary="@string/pref_description_hardware_buttons"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
