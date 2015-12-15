@@ -1,7 +1,12 @@
 package com.jackbbb95.globe.countr.Activities;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,9 +14,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +26,7 @@ import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
 import com.jackbbb95.globe.countr.Fragments.CreateCountrDialogFrag;
 import com.jackbbb95.globe.countr.Handlers.DBHelper;
+import com.jackbbb95.globe.countr.Handlers.MyApplication;
 import com.jackbbb95.globe.countr.R;
 
 import java.lang.reflect.Type;
@@ -32,16 +40,13 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     private DBHelper myDB;
     private Gson gson;
     private FloatingActionButton addCountr;
+    private int SETTINGS_ACTION = 1;
 
     public FloatingActionButton getAddCountr(){return addCountr;}
-
     public ArrayList<Countr> getSaveArray(){
         return saveArray;
     }
-
-    public ArrayList<Countr> getCountrArrayList(){
-        return countrArrayList;
-    }
+    public ArrayList<Countr> getCountrArrayList(){return countrArrayList;}
 
     /*
     Runs on the creation of the MainCountrActivity(the homescreen)
@@ -50,10 +55,16 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String theme = prefs.getString("theme","none");
+        setAppTheme(theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_countr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
         readArrayList();
 
         //creates a fab that will lead to the create countr dialog
@@ -66,6 +77,24 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
                 showCreateCountrDialog();
             }
         });
+    }
+
+    public void setAppTheme(String themeNum){
+        if(themeNum.equals("0")){
+            setTheme(R.style.AppTheme_Light_NoActionBar);
+        } else if(themeNum.equals("1")){
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
+        }
+    }
+
+    @Override
+    protected void onResume(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String theme = prefs.getString("theme","none");
+        if(theme.equals("1")){
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
+        }
+        super.onResume();
     }
 
     @Override
@@ -89,14 +118,11 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this,SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -118,7 +144,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
      */
     public void onFinishCreateCountrDialog(String name){
-        Snackbar.make(this.findViewById(R.id.listview_countr), "Countr '" + name + "' created", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(MainCountrActivity.this, "Countr '" + name + "' created", Toast.LENGTH_SHORT).show();
     }
 
     /*
@@ -130,12 +156,11 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
      */
     @Override
     public void onFinishCreateCountr(Countr newCountr) {
-        onFinishCreateCountrDialog(newCountr.getName());
         saveArray.add(newCountr);
         countrListFragment.getmCountrAdapter().add(newCountr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
         countrListFragment.getCreateText().setVisibility(View.GONE);
-
+        onFinishCreateCountrDialog(newCountr.getName());
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -147,6 +172,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
             countrArrayList.set(curPos,newCountr);
             updateList();
         }
+        super.onActivityResult(resultCode,requestCode,data);
     }
 
 
@@ -198,6 +224,4 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
         myDB.close();
     }
-
 }
-//TODO Work through the UI and brainstorm other features that could be included

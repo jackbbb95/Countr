@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jackbbb95.globe.countr.Activities.CountingActivity;
 import com.jackbbb95.globe.countr.Countr;
@@ -197,7 +198,7 @@ public class CountrListFragment extends Fragment {
                         mCountrAdapter.notifyDataSetChanged();
                         dialog.dismiss();
                         editOrDeleteDialog.dismiss();
-                        Snackbar.make(getActivity().findViewById(R.id.listview_countr), resetThis.getName() + " has been reset", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Countr '" + resetThis.getName() + "' Reset", Toast.LENGTH_SHORT).show();
                     }
                 });
         confirmReset.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
@@ -224,7 +225,7 @@ public class CountrListFragment extends Fragment {
                         mCountrAdapter.notifyDataSetChanged();
                         dialog.dismiss();
                         editOrDeleteDialog.dismiss();
-                        Snackbar.make(getActivity().findViewById(R.id.listview_countr), deleteThis.getName() + " has been deleted", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Countr '" + deleteThis.getName() + "' Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
         confirmDelete.setButton(AlertDialog.BUTTON_NEGATIVE, "No",

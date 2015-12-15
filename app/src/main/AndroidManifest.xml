@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jackbbb95.globe.countr" >
-
-    <application
+    <uses-permission android:name="android.permission.VIBRATE">true</uses-permission>
+    <application android:name="com.jackbbb95.globe.countr.Handlers.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme.Light.NoActionBar" >
         <activity
             android:name=".Activities.MainCountrActivity"
             android:label="@string/app_name"
             android:textColor="@color/textColorPrimary"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,14 +19,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.CountingActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:name=".Activities.CountingActivity">
         </activity>
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".Activities.MainCountrActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:parentActivityName=".Activities.MainCountrActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jackbbb95.globe.countr.Activities.MainCountrActivity" />

@@ -7,7 +7,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -33,6 +33,8 @@ public class CountingActivity extends AppCompatActivity {
     private boolean switchFab = false;
     private int useHardwareButtons;
     private FloatingActionButton fab;
+    private boolean useVibrate;
+    private Vibrator countrVib;
 
     public boolean getSwitchFab() {
         return switchFab;
@@ -44,12 +46,15 @@ public class CountingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_counting);
         SharedPreferences countrPrefs = getSharedPreferences("countrPrefs", Activity.MODE_PRIVATE);
 
-        useHardwareButtons = countrPrefs.getInt("useHB",0); //import settings prefs
+        useHardwareButtons = countrPrefs.getInt("useHB", 0); //import settings prefs
+        useVibrate = countrPrefs.getBoolean("vibrate", false);
+        countrVib = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         getCountr(); //gets the relevant countr through the intent
         Toolbar toolbar = (Toolbar) findViewById(R.id.counting_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(curCountr.getName());
+
         final Context context = this;
 
         fab = (FloatingActionButton) findViewById(R.id.counting_fab);
@@ -79,8 +84,14 @@ public class CountingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!getSwitchFab()) {
                     curCountr.count(true, curNum, pops, context);
+                    if(useVibrate){
+                        countrVib.vibrate(50);
+                    }
                 } else { //if the fab is in the subtracting position, count down by interval(with popup)
                     curCountr.count(false, curNum, pops, context);
+                    if(useVibrate){
+                        countrVib.vibrate(50);
+                    }
                 }
             }
         });
@@ -146,6 +157,9 @@ public class CountingActivity extends AppCompatActivity {
                 case KeyEvent.KEYCODE_VOLUME_UP:{
                     if(action == KeyEvent.ACTION_DOWN){
                         curCountr.count(true, curNum, pops, this);
+                        if(useVibrate){
+                            countrVib.vibrate(50);
+                        }
                         fab.setImageResource(R.drawable.ic_countr_plus);
                         switchFab = false;
                     }
@@ -154,6 +168,9 @@ public class CountingActivity extends AppCompatActivity {
                 case KeyEvent.KEYCODE_VOLUME_DOWN:{
                     if(action == KeyEvent.ACTION_DOWN){
                         curCountr.count(false, curNum, pops, this);
+                        if(useVibrate){
+                            countrVib.vibrate(50);
+                        }
                         fab.setImageResource(R.drawable.ic_countr_minus);
                         switchFab = true;
                     }

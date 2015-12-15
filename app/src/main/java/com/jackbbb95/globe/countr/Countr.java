@@ -1,8 +1,10 @@
 package com.jackbbb95.globe.countr;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.graphics.ColorUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -27,8 +29,8 @@ public  class Countr implements Serializable{
         this.countBy = countBy;
         this.currentNumber = currentNumber;
         this.totalCounted = totalCounted;
-
     }
+
 
     public String getName(){return this.name;}
     public int getStartNumber(){return this.startNumber;}
@@ -39,7 +41,6 @@ public  class Countr implements Serializable{
     public void setStartNumber(int newStartNumber){this.startNumber = newStartNumber;}
     public void setCountBy(int newCountBy){this.countBy = newCountBy;}
     public void setCurrentNumber(int newCurrentNumber){this.currentNumber = newCurrentNumber;}
-
 
     public void count(boolean addOrSubtract,TextView curNum,TextView pops,Context context){
         final Random r = new Random();
@@ -83,3 +84,4 @@ public  class Countr implements Serializable{
     }
 
 }
+//TODO fix max number of count interval or change it to a long?

@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jackbbb95.globe.countr.Activities.MainCountrActivity;
 import com.jackbbb95.globe.countr.Countr;
@@ -236,6 +237,7 @@ public class EditCountrDialogFrag extends DialogFragment {
                         }
                     }
                     ((MainCountrActivity)getActivity()).updateList();
+                    Toast.makeText(getActivity(), "Countr '" + name.getText() + "' Updated", Toast.LENGTH_SHORT).show();
                     getDialog().dismiss();
                 }
             }

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#212121</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#424242</color>
-    <color name="textColorPrimary">#000000</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="textColorPrimary">#212121</color>
+    <color name="textColorSecondary">#727272</color>
+    <color name="textColorWhite">#FFFFFF</color>
     <color name="windowBackground">#FAFAFA</color>
     <color name="dialogColor">#FFFFFF</color>
-    <color name="rippleColor">#E3234A</color>
+
+    <color name="colorPrimary.dark">#212121</color>
+    <color name="colorPrimaryDark.dark">#000000</color>
+    <color name="colorAccent.dark">#FF9800</color>
+    <color name="textColorPrimary.dark">#212121</color>
+    <color name="textColorSecondary.dark">#727272</color>
+    <color name="windowBackground.dark">#303030</color>
+    <color name="dialogColor.dark">#424242</color>
 </resources>

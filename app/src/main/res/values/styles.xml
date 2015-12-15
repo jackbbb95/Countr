@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,6 +9,17 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:soundEffectsEnabled">false</item>
     </style>
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary.dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark.dark</item>
+        <item name="colorAccent">@color/colorAccent.dark</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary.dark</item>
+        <item name="android:soundEffectsEnabled">false</item>
+    </style>
+
+
+
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -27,8 +38,7 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.AppBarOverlay"
-        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Divider">

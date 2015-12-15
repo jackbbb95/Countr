@@ -14,18 +14,13 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
-
 import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.R;
 
-import org.w3c.dom.Text;
 
 public class CreateCountrDialogFrag extends DialogFragment {
 
@@ -38,6 +33,7 @@ public class CreateCountrDialogFrag extends DialogFragment {
     private EditText interval; //the EditText that gives choices of intervals to count by
     private Button create; //the button to create the Countr
     private Button cancel; //the button to close the dialog without creating the Countr
+    private Button chooseColor;
     private InputMethodManager imm;
     private TextInputLayout nameTil;
     private TextInputLayout startNumTil;

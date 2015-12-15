@@ -6,6 +6,19 @@
             android:title="@string/pref_title_hardware_buttons"
             android:summary="@string/pref_description_hardware_buttons"
             android:defaultValue="true" />
+        <SwitchPreference
+            android:key="vibrate"
+            android:title="@string/pref_title_vibrate"
+            android:summary="@string/pref_description_vibrate"
+            android:defaultValue="true" />
+        <ListPreference
+            android:key="theme"
+            android:title="Choose Theme"
+            android:summary="Select a style"
+            android:entries="@array/themes"
+            android:entryValues="@array/themeNums"
+            android:defaultValue="none"/>
+
     </PreferenceCategory>
 
 
