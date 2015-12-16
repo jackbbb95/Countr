@@ -5,8 +5,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-    android:background="@color/dialogColor">
+    android:background="@color/dialogColor"
+    android:theme="@style/AppTheme.Light.NoActionBar">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/create_countr_toolbar"
@@ -14,9 +14,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        android:theme="@style/AppTheme.AppBarOverlay"/>
 
 
     <android.support.design.widget.TextInputLayout
@@ -31,6 +30,7 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
+            android:maxLength="25"
             android:focusable="true" />
 
     </android.support.design.widget.TextInputLayout>
@@ -46,6 +46,7 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
+            android:maxLength="9"
             android:focusable="true"
             android:id="@+id/curNumET" />
     </android.support.design.widget.TextInputLayout>
@@ -62,6 +63,7 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
+            android:maxLength="9"
             android:focusable="true" />
 
     </android.support.design.widget.TextInputLayout>

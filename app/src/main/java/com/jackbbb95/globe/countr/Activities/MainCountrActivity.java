@@ -36,17 +36,14 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
     private CountrListFragment countrListFragment = new CountrListFragment(); //used to create an instance of the list of Countrs
     private ArrayList<Countr> countrArrayList = new ArrayList<>();
-    private ArrayList<Countr> saveArray = new ArrayList<>();
     private DBHelper myDB;
     private Gson gson;
     private FloatingActionButton addCountr;
-    private int SETTINGS_ACTION = 1;
 
     public FloatingActionButton getAddCountr(){return addCountr;}
-    public ArrayList<Countr> getSaveArray(){
-        return saveArray;
-    }
+
     public ArrayList<Countr> getCountrArrayList(){return countrArrayList;}
+    public CountrListFragment getCountrListFragment(){return countrListFragment;}
 
     /*
     Runs on the creation of the MainCountrActivity(the homescreen)
@@ -55,17 +52,15 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String theme = prefs.getString("theme","none");
-        setAppTheme(theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_countr);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
         readArrayList();
+        PreferenceManager.setDefaultValues(this,R.xml.pref_general,false);
+        if(getCountrListFragment().getmCountrAdapter().getCount() == 0)
+            countrListFragment.getCreateText().setVisibility(View.VISIBLE);
+
 
         //creates a fab that will lead to the create countr dialog
         addCountr = (FloatingActionButton) findViewById(R.id.addCountr);
@@ -79,22 +74,11 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         });
     }
 
-    public void setAppTheme(String themeNum){
-        if(themeNum.equals("0")){
-            setTheme(R.style.AppTheme_Light_NoActionBar);
-        } else if(themeNum.equals("1")){
-            setTheme(R.style.AppTheme_Dark_NoActionBar);
-        }
-    }
 
     @Override
     protected void onResume(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String theme = prefs.getString("theme","none");
-        if(theme.equals("1")){
-            setTheme(R.style.AppTheme_Dark_NoActionBar);
-        }
         super.onResume();
+        saveArrayList();
     }
 
     @Override
@@ -156,7 +140,6 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
      */
     @Override
     public void onFinishCreateCountr(Countr newCountr) {
-        saveArray.add(newCountr);
         countrListFragment.getmCountrAdapter().add(newCountr);
         countrListFragment.getmCountrAdapter().notifyDataSetChanged();
         countrListFragment.getCreateText().setVisibility(View.GONE);
@@ -168,7 +151,6 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         if(resultCode == RESULT_OK){
             int curPos = data.getIntExtra("Position",-1);
             Countr newCountr = (Countr)data.getSerializableExtra("NewCountr");
-            saveArray.set(curPos,newCountr);
             countrArrayList.set(curPos,newCountr);
             updateList();
         }
@@ -187,10 +169,10 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     public void saveArrayList(){
         this.deleteDatabase("CountrsDB"); //clears current database
         ArrayList<Countr> tempArrayList = new ArrayList<Countr>();
-        for(Countr c : saveArray){
-            tempArrayList.add(c);
-
+        for(int i = 0; i < countrListFragment.getmCountrAdapter().getCount(); i++) {
+            tempArrayList.add(countrListFragment.getmCountrAdapter().getItem(i));
         }
+
         gson = new Gson();
         Type type = new TypeToken<ArrayList<Countr>>() {}.getType();
         String inputString = gson.toJson(tempArrayList, type);
@@ -213,8 +195,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         try {
             if (returnString != null) {
                 tempArray = gson.fromJson(returnString, type);
-                saveArray.addAll(tempArray); //loads the temporary array onto the current saveArray
-                countrListFragment.getmCountrAdapter().addAll(saveArray /*tempArray*/); //add all to the Listview adapter
+                countrListFragment.getmCountrAdapter().addAll(tempArray); //add all to the Listview adapter
                 countrListFragment.getmCountrAdapter().notifyDataSetChanged();
                 countrListFragment.getCreateText().setVisibility(View.GONE); //Create Countr message disappear
             }
@@ -225,3 +206,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
         myDB.close();
     }
 }
+
+
+//TODO About?
+//TODO Icon

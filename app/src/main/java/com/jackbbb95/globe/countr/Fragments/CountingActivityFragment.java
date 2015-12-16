@@ -1,22 +1,14 @@
 package com.jackbbb95.globe.countr.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.Random;
+
 import com.jackbbb95.globe.countr.Activities.CountingActivity;
 import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.R;

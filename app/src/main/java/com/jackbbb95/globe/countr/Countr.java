@@ -1,10 +1,6 @@
 package com.jackbbb95.globe.countr;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v4.graphics.ColorUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -18,10 +14,10 @@ import java.util.Random;
 
 public  class Countr implements Serializable{
     private String name; //holds the name of the countr
-    private int startNumber; //holds the set number that the countr starts at
-    private int totalCounted; //keeps count of the total number that has been counted
-    private int countBy; //the interval of each count
-    private int currentNumber = startNumber+totalCounted; //the current number that the counter displays
+    private long startNumber; //holds the set number that the countr starts at
+    private long totalCounted; //keeps count of the total number that has been counted
+    private long countBy; //the interval of each count
+    private long currentNumber = startNumber+totalCounted; //the current number that the counter displays
 
     public Countr(String name, int startNumber, int countBy, int currentNumber, int totalCounted) {
         this.name = name;
@@ -33,9 +29,9 @@ public  class Countr implements Serializable{
 
 
     public String getName(){return this.name;}
-    public int getStartNumber(){return this.startNumber;}
-    public int getCountBy(){return this.countBy;}
-    public int getCurrentNumber(){return this.currentNumber;}
+    public long getStartNumber(){return this.startNumber;}
+    public long getCountBy(){return this.countBy;}
+    public long getCurrentNumber(){return this.currentNumber;}
 
     public void setName(String newName){this.name = newName;}
     public void setStartNumber(int newStartNumber){this.startNumber = newStartNumber;}
@@ -61,14 +57,14 @@ public  class Countr implements Serializable{
             curNum.setText(String.valueOf(currentNumber));
             CountingActivity.updateCountr(this);
             //For the interval Popup
-            pops.setText("+" + countBy);
+            pops.setText(String.format("+%d", countBy));
         }
         if(!addOrSubtract){
             currentNumber = getCurrentNumber() - getCountBy();
             curNum.setText(String.valueOf(currentNumber));
             CountingActivity.updateCountr(this);
             //For the interval Popup
-            pops.setText("-" + countBy);
+            pops.setText(String.format("-%d", countBy));
         }
 
         float randWidth = 150 + r.nextFloat() * (displayWidth - (float) (displayWidth / 4));
@@ -84,4 +80,3 @@ public  class Countr implements Serializable{
     }
 
 }
-//TODO fix max number of count interval or change it to a long?

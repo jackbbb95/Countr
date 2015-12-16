@@ -31,7 +31,7 @@ public class CountingActivity extends AppCompatActivity {
     private static Countr curCountr;
     private int curPos;
     private boolean switchFab = false;
-    private int useHardwareButtons;
+    private boolean useHardwareButtons;
     private FloatingActionButton fab;
     private boolean useVibrate;
     private Vibrator countrVib;
@@ -46,8 +46,8 @@ public class CountingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_counting);
         SharedPreferences countrPrefs = getSharedPreferences("countrPrefs", Activity.MODE_PRIVATE);
 
-        useHardwareButtons = countrPrefs.getInt("useHB", 0); //import settings prefs
-        useVibrate = countrPrefs.getBoolean("vibrate", false);
+        useHardwareButtons = countrPrefs.getBoolean("useHB", false); //import settings prefs
+        useVibrate = countrPrefs.getBoolean("vibrate", true);
         countrVib = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
         getCountr(); //gets the relevant countr through the intent
@@ -148,7 +148,7 @@ public class CountingActivity extends AppCompatActivity {
      */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event){
-        if(useHardwareButtons == 2 || useHardwareButtons == 0){ //if first use or if setting for hardware buttons is true
+        if(useHardwareButtons){ //if first use or if setting for hardware buttons is true
             int keyCode = event.getKeyCode();
             int action = event.getAction();
             TextView curNum = getVisibleFragment().getCountrCurrentNumber();

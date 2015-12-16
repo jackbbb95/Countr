@@ -172,7 +172,7 @@ public class CountrListFragment extends Fragment {
         if (resultCode == getActivity().RESULT_OK) {
             Countr newCountr = (Countr) data.getSerializableExtra("NewCountr");
             int curPos = data.getIntExtra("Position",-1);
-            ((MainCountrActivity) getActivity()).getSaveArray().set(curPos, newCountr);
+            ((MainCountrActivity) getActivity()).getCountrArrayList().set(curPos, newCountr);
             mCountrAdapter.notifyDataSetChanged();
         }
     }
@@ -220,11 +220,13 @@ public class CountrListFragment extends Fragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((MainCountrActivity) getActivity()).getSaveArray().remove(deleteThis);
                         mCountrAdapter.remove(deleteThis);
                         mCountrAdapter.notifyDataSetChanged();
                         dialog.dismiss();
                         editOrDeleteDialog.dismiss();
+                        if(mCountrAdapter.getCount() == 0){
+                            getCreateText().setVisibility(View.VISIBLE);
+                        }
                         Toast.makeText(getActivity(), "Countr '" + deleteThis.getName() + "' Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });

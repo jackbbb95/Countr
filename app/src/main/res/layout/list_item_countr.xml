@@ -5,25 +5,37 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:id="@+id/tv_name"
-        android:gravity="left|center_vertical"
+        android:gravity="left|top"
         android:textStyle="normal"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="@color/textColorPrimary">
+        android:textColor="@color/textColorPrimary"
+        android:layout_marginTop="@dimen/abc_dialog_list_padding_vertical_material">
     </TextView>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:id="@+id/tv_count"
         android:textSize="@dimen/abc_text_size_medium_material"
         android:gravity="center_vertical|right"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="false"
         android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
-        android:textColor="@color/textColorPrimary">
+        android:textColor="@color/textColorSecondary">
     </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_interval"
+        android:layout_below="@+id/tv_name"
+        android:textSize="@dimen/abc_text_size_small_material"
+        android:textColor="@color/textColorSecondary"
+        android:gravity="left|center_vertical"
+        android:layout_marginBottom="@dimen/abc_dialog_list_padding_vertical_material" />
 
 </RelativeLayout>

@@ -29,6 +29,7 @@ public class CountrAdapter extends ArrayAdapter<Countr> {
      */
     private class ViewHolder {
         TextView mainText;
+        TextView intervalText;
         TextView subText;
     }
 
@@ -44,6 +45,8 @@ public class CountrAdapter extends ArrayAdapter<Countr> {
             holder = new ViewHolder(); //initializes holder
             holder.mainText = (TextView) convertView.findViewById(R.id.tv_name);
             holder.mainText.setTypeface(robotoLight);
+            holder.intervalText = (TextView) convertView.findViewById(R.id.tv_interval);
+            holder.intervalText.setTypeface(robotoLight);
             holder.subText = (TextView) convertView.findViewById(R.id.tv_count); //sets the recycled view to current items layout
             holder.subText.setTypeface(robotoLight);
             convertView.setTag(holder);
@@ -52,6 +55,7 @@ public class CountrAdapter extends ArrayAdapter<Countr> {
             holder = (ViewHolder) convertView.getTag();
 
         holder.subText.setText(String.valueOf(countr.getCurrentNumber())); //subText holds the current count
+        holder.intervalText.setText(String.format("±%s", String.valueOf(countr.getCountBy()))); //intervalText holds the current interval
         holder.mainText.setText(String.valueOf(countr.getName())); //mainText holds the name of the countr
 
         return convertView; //returns the recycled view item
