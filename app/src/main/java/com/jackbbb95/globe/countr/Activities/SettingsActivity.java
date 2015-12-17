@@ -13,6 +13,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +21,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jackbbb95.globe.countr.Countr;
+import com.jackbbb95.globe.countr.Fragments.AboutDialogFrag;
 import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
+import com.jackbbb95.globe.countr.Fragments.CreateCountrDialogFrag;
 import com.jackbbb95.globe.countr.Handlers.CountrAdapter;
 import com.jackbbb95.globe.countr.Handlers.MyApplication;
 import com.jackbbb95.globe.countr.R;
@@ -170,7 +173,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
 
-
+            final Preference about = findPreference("about");
+            about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    android.app.FragmentManager fm = getActivity().getFragmentManager();
+                    AboutDialogFrag aboutDialog = new AboutDialogFrag();
+                    aboutDialog.show(fm, "fragment_about_countr");
+                    return true;
+                }
+            });
 
         }
 

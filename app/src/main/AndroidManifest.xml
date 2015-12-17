@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jackbbb95.globe.countr" >
-    <uses-permission android:name="android.permission.VIBRATE">true</uses-permission>
-    <application android:name="com.jackbbb95.globe.countr.Handlers.MyApplication"
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name=".Handlers.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
@@ -18,18 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.CountingActivity">
+        <activity android:name=".Activities.CountingActivity" >
         </activity>
         <activity
             android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".Activities.MainCountrActivity">
+            android:parentActivityName=".Activities.MainCountrActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jackbbb95.globe.countr.Activities.MainCountrActivity" />
         </activity>
-
     </application>
 
 </manifest>

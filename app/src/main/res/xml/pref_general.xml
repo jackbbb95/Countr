@@ -20,5 +20,10 @@
             android:key="delete_all"
             android:title="@string/pref_title_delete" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_about">
+        <Preference
+            android:key="about"
+            android:title="@string/pref_title_about"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

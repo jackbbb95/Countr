@@ -61,7 +61,7 @@ public class EditCountrDialogFrag extends DialogFragment {
         final View view = inflater.inflate(R.layout.edit_countr_dialog_frag,container);
         Context context = getContext();
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Toolbar tb = (Toolbar) view.findViewById(R.id.create_countr_toolbar);
+        Toolbar tb = (Toolbar) view.findViewById(R.id.edit_countr_toolbar);
         tb.setTitle("Edit Countr");
 
         Bundle bundle = getArguments();
@@ -239,6 +239,7 @@ public class EditCountrDialogFrag extends DialogFragment {
                     ((MainCountrActivity)getActivity()).updateList();
                     Toast.makeText(getActivity(), "Countr '" + name.getText() + "' Updated", Toast.LENGTH_SHORT).show();
                     getDialog().dismiss();
+
                 }
             }
         });

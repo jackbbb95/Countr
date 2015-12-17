@@ -9,7 +9,7 @@
     android:theme="@style/AppTheme.Light.NoActionBar">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/create_countr_toolbar"
+        android:id="@+id/edit_countr_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
