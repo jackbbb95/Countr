@@ -31,5 +31,16 @@
     <string name="pref_header_about">About</string>
     <string name="pref_title_about">About Countr</string>
     <string name="title_activity_license_check">LicenseCheck</string>
+    <string name="list_item_pic">list_item_pic</string>
+    <string name="countr_logo">logo</string>
+    <string name="developer_name">globe.</string>
+    <string name="licenses_header">Used Open Source Projects:</string>
+    <string name="version_number">version 1.0</string>
+
+    <string name="dialog_plus_link"><a href="https://github.com/orhanobut/dialogplus">Dialog Plus</a> by Orhan Obut</string>
+    <string name="GSON_link"><a href="https://github.com/google/gson">GSON Library</a> by Google</string>
+    <string name="create_countr_dialog_toolbar_text">Create Countr</string>
+    <string name="edit_countr_dialog_toolbar_text">Edit Countr</string>
+    <string name="title_about_fragment">About Countr</string>
 
 </resources>

@@ -5,59 +5,49 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.IntentCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.Fragments.AboutDialogFrag;
-import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
-import com.jackbbb95.globe.countr.Fragments.CreateCountrDialogFrag;
-import com.jackbbb95.globe.countr.Handlers.CountrAdapter;
-import com.jackbbb95.globe.countr.Handlers.MyApplication;
 import com.jackbbb95.globe.countr.R;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
+    private static boolean keepAlive = false;
     private static MainCountrActivity ac = new MainCountrActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_layout);
+        //setup toolbar
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setTitle(R.string.action_settings);
+        getSupportActionBar().setTitle("");
     }
 
+    //keeps settings activity alive on screen rotation
     @Override
-    protected void onPause(){
-        super.onPause();
-        finish();
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus) keepAlive = false; //makes it so activity can finish if no dialogs are open
+        if(!hasFocus && !keepAlive) finish();
     }
 
+    //The fragment that handles allthe preferences and their catagories
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         SharedPreferences mPrefs;
-        Context context = (MainCountrActivity)getActivity();
 
         @Override
         public void onStart(){
             super.onStart();
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity()); //get the shared preferences to be changed
         }
 
         @Override
@@ -65,7 +55,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             SharedPreferences countrPrefs = getActivity().getSharedPreferences("countrPrefs", Activity.MODE_PRIVATE);
-            final SharedPreferences.Editor editor = countrPrefs.edit();
+            final SharedPreferences.Editor editor = countrPrefs.edit(); //to allow editing of the preferences
 
             //for the setting indicating whether the user wants to use hardware buttons
             final SwitchPreference useHardwareButtons = (SwitchPreference) findPreference("hardware_buttons");
@@ -88,6 +78,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
 
+            //for the setting indicating whether the user wants to have vibrations on each count
             final SwitchPreference useVibration = (SwitchPreference) findPreference("vibrate");
             useVibration.setDefaultValue(false);
             useVibration.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -108,7 +99,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 }
             });
 
-
+            //for the setting that will reset the count of all current countrs
             final Preference resetAll = findPreference("reset_all");
             resetAll.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -136,11 +127,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                     dialog.dismiss();
                                 }
                             });
+                    keepAlive = true; //keeps activity alive on rotation
                     confirmReset.show();
                     return true;
                 }
             });
 
+            //for the setting that would delete all countrs
             final Preference deleteAll = findPreference("delete_all");
             deleteAll.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -168,17 +161,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                     dialog.dismiss();
                                 }
                             });
+                    keepAlive = true; //keeps activity alive on rotation
                     confirmDelete.show();
                     return true;
                 }
             });
 
+            //for showing the about fragment that shows the info about the app
             final Preference about = findPreference("about");
             about.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     android.app.FragmentManager fm = getActivity().getFragmentManager();
                     AboutDialogFrag aboutDialog = new AboutDialogFrag();
+                    keepAlive = true; //keeps activity alive on rotation
                     aboutDialog.show(fm, "fragment_about_countr");
                     return true;
                 }

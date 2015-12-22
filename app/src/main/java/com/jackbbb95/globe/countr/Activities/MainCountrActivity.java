@@ -21,7 +21,6 @@ import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.Fragments.CountrListFragment;
 import com.jackbbb95.globe.countr.Fragments.CreateCountrDialogFrag;
 import com.jackbbb95.globe.countr.Handlers.DBHelper;
-import com.jackbbb95.globe.countr.Handlers.MyApplication;
 import com.jackbbb95.globe.countr.R;
 
 import java.lang.reflect.Type;
@@ -49,8 +48,8 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_countr);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         readArrayList();
         PreferenceManager.setDefaultValues(this,R.xml.pref_general,false);
@@ -74,7 +73,7 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     @Override
     protected void onResume(){
         super.onResume();
-        saveArrayList();
+        saveArrayList(); //save the array in case of device rotation
     }
 
     @Override
@@ -100,7 +99,6 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
@@ -204,7 +202,3 @@ public class MainCountrActivity extends AppCompatActivity implements CreateCount
 
 }
 
-
-//TODO About?
-//TODO Icon
-//TODO Possibly new UI Colors

@@ -10,9 +10,8 @@
         android:textSize="@dimen/abc_text_size_headline_material"
         android:textColor="@color/textColorPrimary"
         android:layout_marginBottom="@dimen/abc_dialog_list_padding_vertical_material"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_marginTop="@dimen/abc_dialog_list_padding_vertical_material" />
-
-    <View style="@style/Divider"
-        android:layout_gravity="bottom" />
+        android:gravity="left|center_vertical"
+        android:fontFamily="sans-serif"
+        android:layout_marginLeft="@dimen/abc_dialog_padding_material"
+        android:paddingTop="@dimen/abc_dialog_padding_top_material" />
 </FrameLayout>

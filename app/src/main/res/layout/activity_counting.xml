@@ -19,8 +19,15 @@
             android:id="@+id/counting_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
-
+            android:background="?attr/colorPrimary">
+            <TextView
+                android:id="@+id/countr_name_tv_counting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
 

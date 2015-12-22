@@ -38,6 +38,7 @@ public  class Countr implements Serializable{
     public void setCountBy(int newCountBy){this.countBy = newCountBy;}
     public void setCurrentNumber(int newCurrentNumber){this.currentNumber = newCurrentNumber;}
 
+    //the method that will change the current number and will show the interval textviews
     public void count(boolean addOrSubtract,TextView curNum,TextView pops,Context context){
         final Random r = new Random();
         //setup fade animation for interval popup
@@ -67,6 +68,7 @@ public  class Countr implements Serializable{
             pops.setText(String.format("-%d", countBy));
         }
 
+        //the algorithm for the random locations that the interval will pop up on each count
         float randWidth = 150 + r.nextFloat() * (displayWidth - (float) (displayWidth / 4));
         float randHeight = 200 + r.nextFloat() * (displayHeight - (float) (displayHeight / 3));
         while (randWidth > displayWidth / 2.9 && randWidth < displayWidth / 1.3

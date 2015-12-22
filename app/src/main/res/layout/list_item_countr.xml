@@ -8,11 +8,11 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:id="@+id/tv_name"
-        android:gravity="left|top"
+        android:gravity="left"
         android:textStyle="normal"
         android:textSize="@dimen/abc_text_size_large_material"
         android:textColor="@color/textColorPrimary"
-        android:layout_marginTop="@dimen/abc_dialog_list_padding_vertical_material">
+        android:paddingTop="@dimen/dialog_vertical_spacing">
     </TextView>
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_interval"
-        android:layout_below="@+id/tv_name"
         android:textSize="@dimen/abc_text_size_small_material"
         android:textColor="@color/textColorSecondary"
-        android:gravity="left|center_vertical"
-        android:layout_marginBottom="@dimen/abc_dialog_list_padding_vertical_material" />
+        android:gravity="left"
+        android:layout_below="@+id/tv_name"
+        android:paddingBottom="@dimen/dialog_vertical_spacing" />
 
 </RelativeLayout>

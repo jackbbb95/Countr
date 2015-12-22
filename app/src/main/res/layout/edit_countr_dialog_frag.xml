@@ -15,8 +15,14 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:layout_gravity="top"
-        android:theme="@style/AppTheme.AppBarOverlay"/>
-
+        android:theme="@style/AppTheme.AppBarOverlay" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/edit_countr_dialog_toolbar_text"
+            android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/edit_name_til"
@@ -31,7 +37,8 @@
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
             android:maxLength="25"
-            android:focusable="true" />
+            android:focusable="true"
+            android:fontFamily="sans-serif-light"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -48,7 +55,8 @@
             android:inputType="textCapWords"
             android:maxLength="9"
             android:focusable="true"
-            android:id="@+id/curNumET" />
+            android:id="@+id/curNumET"
+            android:fontFamily="sans-serif-light"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -64,7 +72,8 @@
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
             android:maxLength="9"
-            android:focusable="true" />
+            android:focusable="true"
+            android:fontFamily="sans-serif-light"/>
 
     </android.support.design.widget.TextInputLayout>
 
