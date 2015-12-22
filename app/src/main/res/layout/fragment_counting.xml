@@ -1,11 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_counting"
     tools:context="com.jackbbb95.globe.countr.Fragments.CountingActivityFragment"
     android:id="@+id/counting_activity_frag"
-    style="@style/AppTheme">
+    style="@style/AppTheme.Light">
 
 
     <TextView
@@ -30,4 +30,4 @@
         android:layout_height="match_parent"
         style="@style/TextAppearance.AppCompat.Display1"
         android:id="@+id/interval_pop" />
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

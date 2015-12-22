@@ -6,4 +6,41 @@
     <string name="set_start_number">Start Counting At:</string>
     <string name="interval_ask">Interval:</string>
     <string name="title_activity_counting">CountingActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_counting">Counting</string>
+
+    <string name="pref_title_hardware_buttons">Enable Volume Keys</string>
+    <string name="pref_description_hardware_buttons">Use the volume keys to count</string>
+    <string name="pref_hardware_buttons_enabled">Hardware Buttons Disabled</string>
+    <string name="pref_hardware_buttons_disabled">Hardware Buttons Enabled</string>
+
+    <string name="pref_title_vibrate">Enable Vibrations</string>
+    <string name="pref_description_vibrate">Set to vibrate on each count</string>
+    <string name="pref_vibrate_disabled">Vibrations Disabled</string>
+    <string name="pref_vibrate_enabled">Vibrations Enabled</string>
+
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_delete">Delete All Countrs</string>
+    <string name="pref_title_reset">Reset All Countrs</string>
+
+    <string name="pref_header_about">About</string>
+    <string name="pref_title_about">About Countr</string>
+    <string name="title_activity_license_check">LicenseCheck</string>
+    <string name="list_item_pic">list_item_pic</string>
+    <string name="countr_logo">logo</string>
+    <string name="developer_name">globe.</string>
+    <string name="licenses_header">Used Open Source Projects:</string>
+    <string name="version_number">version 1.0</string>
+
+    <string name="dialog_plus_link"><a href="https://github.com/orhanobut/dialogplus">Dialog Plus</a> by Orhan Obut</string>
+    <string name="GSON_link"><a href="https://github.com/google/gson">GSON Library</a> by Google</string>
+    <string name="create_countr_dialog_toolbar_text">Create Countr</string>
+    <string name="edit_countr_dialog_toolbar_text">Edit Countr</string>
+    <string name="title_about_fragment">About Countr</string>
+
 </resources>

@@ -1,9 +1,22 @@
-<resources>>
-    <style name="AppTheme.NoActionBar">
+<resources>
+    <style name="AppTheme.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+    </style>
 
+    <style name="AppTheme.Dark.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="colorPrimary">@color/colorPrimary.dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark.dark</item>
+        <item name="colorAccent">@color/colorAccent.dark</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary.dark</item>
+        <item name="android:soundEffectsEnabled">false</item>
     </style>
 </resources>

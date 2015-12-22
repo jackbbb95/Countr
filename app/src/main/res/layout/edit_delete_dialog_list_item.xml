@@ -2,9 +2,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textSize="@dimen/abc_text_size_large_material"
-    android:gravity="center_vertical|center_horizontal"
-    android:paddingTop="@dimen/abc_dialog_list_padding_vertical_material"
-    android:paddingBottom="@dimen/abc_dialog_list_padding_vertical_material">
-
+    android:gravity="left|center_vertical"
+    android:paddingLeft="@dimen/abc_dialog_padding_material"
+    android:layout_marginBottom="@dimen/abc_dialog_padding_top_material"
+    style="@style/AppTheme.Light.NoActionBar"
+    android:paddingTop="@dimen/abc_dialog_padding_top_material"
+    android:paddingBottom="@dimen/dialog_vertical_spacing">
 </TextView>
