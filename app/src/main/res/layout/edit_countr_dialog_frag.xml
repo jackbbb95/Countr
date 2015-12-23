@@ -5,19 +5,24 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="1"
-    android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-    android:background="@color/dialogColor">
+    android:background="@color/dialogColor"
+    android:theme="@style/AppTheme.Light.NoActionBar">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/create_countr_toolbar"
+        android:id="@+id/edit_countr_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:layout_gravity="top" />
-
+        android:layout_gravity="top"
+        android:theme="@style/AppTheme.AppBarOverlay" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/edit_countr_dialog_toolbar_text"
+            android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/edit_name_til"
@@ -31,7 +36,9 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
-            android:focusable="true" />
+            android:maxLength="25"
+            android:focusable="true"
+            android:fontFamily="sans-serif-light"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -46,8 +53,10 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
+            android:maxLength="9"
             android:focusable="true"
-            android:id="@+id/curNumET" />
+            android:id="@+id/curNumET"
+            android:fontFamily="sans-serif-light"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -62,7 +71,9 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/abc_dialog_padding_material"
             android:inputType="textCapWords"
-            android:focusable="true" />
+            android:maxLength="9"
+            android:focusable="true"
+            android:fontFamily="sans-serif-light"/>
 
     </android.support.design.widget.TextInputLayout>
 

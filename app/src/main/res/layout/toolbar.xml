@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar"
+    style="@style/AppTheme.Light">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif"
+        android:text="@string/title_activity_settings"
+        android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+</android.support.v7.widget.Toolbar>
+
+

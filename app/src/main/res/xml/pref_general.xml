@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_header_counting">
+        <SwitchPreference
+            android:key="hardware_buttons"
+            android:title="@string/pref_title_hardware_buttons"
+            android:summary="@string/pref_description_hardware_buttons"
+            android:defaultValue="false" />
+        <SwitchPreference
+            android:key="vibrate"
+            android:title="@string/pref_title_vibrate"
+            android:summary="@string/pref_description_vibrate"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_general">
+        <Preference
+            android:key="reset_all"
+            android:title="@string/pref_title_reset" />
+        <Preference
+            android:key="delete_all"
+            android:title="@string/pref_title_delete" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_about">
+        <Preference
+            android:key="about"
+            android:title="@string/pref_title_about"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

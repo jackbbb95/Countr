@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jackbbb95.globe.countr.Fragments.AboutDialogFrag"
+    style="@style/AppTheme.Light">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/about_countr_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_gravity="top">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/title_about_fragment"
+            android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countr_logo"
+        android:layout_gravity="center_horizontal|top"
+        android:contentDescription="@string/countr_logo"
+        android:layout_below="@+id/about_countr_toolbar"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/countr_icon_about"
+        android:layout_marginTop="@dimen/abc_dialog_padding_top_material"
+        android:layout_marginBottom="@dimen/abc_dialog_padding_top_material" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/developer_name"
+        android:id="@+id/globe"
+        android:layout_gravity="center"
+        android:layout_below="@+id/countr_logo"
+        style="@style/AppTheme.Light.NoActionBar"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version_number"
+        android:id="@+id/version_about"
+        android:layout_gravity="center"
+        android:layout_below="@+id/globe"
+        style="@style/AppTheme.Light.NoActionBar"
+        android:layout_centerHorizontal="true" />
+
+    <View style="@style/Divider"
+        android:id="@+id/about_divider1"
+        android:layout_below="@+id/version_about"
+        android:backgroundTint="@color/colorPrimaryDark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/licenses_header"
+        android:id="@+id/licenses_header"
+        android:layout_gravity="center"
+        android:layout_below="@+id/about_divider1"
+        style="@style/AppTheme.Light.NoActionBar"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:layout_marginLeft="@dimen/abc_list_item_padding_horizontal_material"
+        android:layout_marginTop="@dimen/abc_dialog_padding_top_material" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_plus_link"
+        android:id="@+id/license_dialog_plus"
+        android:layout_gravity="center"
+        android:layout_below="@+id/licenses_header"
+        style="@style/AppTheme.Light.NoActionBar"
+        android:layout_marginLeft="@dimen/abc_list_item_padding_horizontal_material"
+        android:layout_marginTop="@dimen/abc_dialog_padding_top_material"
+        android:linksClickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/GSON_link"
+        android:id="@+id/license_GSON"
+        android:layout_gravity="center"
+        android:layout_below="@+id/license_dialog_plus"
+        style="@style/AppTheme.Light.NoActionBar"
+        android:layout_marginLeft="@dimen/abc_list_item_padding_horizontal_material"
+        android:layout_marginTop="@dimen/abc_dialog_padding_top_material"
+        android:linksClickable="true" />
+
+</RelativeLayout>

@@ -12,46 +12,39 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.jackbbb95.globe.countr.Activities.MainCountrActivity;
 import com.jackbbb95.globe.countr.Countr;
 import com.jackbbb95.globe.countr.R;
 
 
 public class EditCountrDialogFrag extends DialogFragment {
 
-    public interface CreateCountrDialogListener{
-        void onFinishCreateCountr(Countr newCountr);
-    } //runs onFinishCountrDialog when creation is done
-
     private EditText name; //the EditText box where the user inpts the name of the Countr
     private EditText curNum; //the Number Picker where the user chooses the start number
     private EditText interval; //the Spinner that gives choices of intervals to count by
     private Button create; //the button to create the Countr
-    private Countr curCountr;
-
-
+    private Countr curCountr; // the current countr being edited
 
     public EditCountrDialogFrag(){} //default constructor for CreateCountrDialogFrag
-
 
     @Override
     public void onStart(){
         super.onStart();
+        //setting the size of the edit dialog
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.WRAP_CONTENT;
         getDialog().getWindow().setLayout(width,height);
-
-    } //On the start of the dialog creation, sets the size of the dialog box
+    }
 
     /*
     Brings up the dialog that asks the user to input parameters that are fed to a new Countr Object
@@ -59,24 +52,21 @@ public class EditCountrDialogFrag extends DialogFragment {
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState){
         final View view = inflater.inflate(R.layout.edit_countr_dialog_frag,container);
-        Context context = getContext();
+        //setup toolbar
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Toolbar tb = (Toolbar) view.findViewById(R.id.create_countr_toolbar);
-        tb.setTitle("Edit Countr");
-
+        Toolbar tb = (Toolbar) view.findViewById(R.id.edit_countr_toolbar);
+        tb.setTitle("");
+        //get the current countr to be edited
         Bundle bundle = getArguments();
         curCountr = (Countr) bundle.getSerializable("Countr");
-
-        /*
-        for the name of the countr
-         */
+        //for the name of the countr
         name = (EditText) view.findViewById(R.id.edit_name);
         TextInputLayout nameTil = (TextInputLayout) view.findViewById(R.id.edit_name_til);
         nameTil.setHint("Name");
-        //configure keyboard
+        //configure keyboard to show the correct keyboard for each edittext
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY); //show keyboard
-        //hint config
+        //hint configuration so so that the previous values can be seen
         name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -95,9 +85,7 @@ public class EditCountrDialogFrag extends DialogFragment {
             }
         });
 
-        /*
-        for the current number
-        */
+        //for the current number
         curNum = (EditText) view.findViewById(R.id.curNumET);
         TextInputLayout curNumTil = (TextInputLayout) view.findViewById(R.id.cur_num_til);
         curNumTil.setHint("Value");
@@ -122,9 +110,7 @@ public class EditCountrDialogFrag extends DialogFragment {
             }
         });
 
-        /*
-        for the interval to count by
-         */
+        //for the interval to count by
         interval = (EditText)view.findViewById(R.id.edit_interval);
         TextInputLayout intervalTil = (TextInputLayout) view.findViewById(R.id.edit_interval_til);
         intervalTil.setHint("Interval");
@@ -214,7 +200,7 @@ public class EditCountrDialogFrag extends DialogFragment {
             }
         });
 
-
+        //actually implement the edits that were made to the current countr
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,7 +222,10 @@ public class EditCountrDialogFrag extends DialogFragment {
                             curCountr.setCountBy(Integer.parseInt(interval.getText().toString()));
                         }
                     }
+                    ((MainCountrActivity)getActivity()).updateList();
+                    Toast.makeText(getActivity(), "Countr '" + name.getText() + "' Updated", Toast.LENGTH_SHORT).show();
                     getDialog().dismiss();
+
                 }
             }
         });
