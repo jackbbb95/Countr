@@ -43,4 +43,8 @@
     <string name="edit_countr_dialog_toolbar_text">Edit Countr</string>
     <string name="title_about_fragment">About Countr</string>
 
+    <string name="configure">Pick a Countr</string>
+    <string name="add_widget">Add widget</string>
+    <string name="count_button">count_button</string>
+
 </resources>
