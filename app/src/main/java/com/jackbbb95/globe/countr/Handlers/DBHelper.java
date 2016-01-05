@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper{
     private static final String DATABASE_CREATE = " CREATE TABLE " + COUNTR_TABLE +
             "(" + COUNTR_COLUMN + " TEXT NOT NULL)";
 
+    private static final String COUNTR_IDS = "CountrIDs";
 
     public DBHelper(Context context){
         super(context, DATABASE_NAME, null, 1);

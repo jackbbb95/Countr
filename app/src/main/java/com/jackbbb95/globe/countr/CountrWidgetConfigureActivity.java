@@ -32,6 +32,7 @@ public class CountrWidgetConfigureActivity extends Activity {
     private static final String PREF_CUR_NAME = "appwidget_";
     private static final String PREF_CUR_NUM = "countrNum";
     private static final String PREF_CUR_INTERVAL = "countrInterval";
+    private static final String PREF_CUR_ID = "countrID";
     private ArrayAdapter<Countr> countrListAdapter;
     private String curCountrName;
     private long curCountrNum;
@@ -75,9 +76,6 @@ public class CountrWidgetConfigureActivity extends Activity {
         });
 
 
-
-
-
         findViewById(R.id.add_button).setOnClickListener(mOnClickListener);
 
         // Find the widget id from the intent.
@@ -94,7 +92,6 @@ public class CountrWidgetConfigureActivity extends Activity {
             return;
         }
 
-        //mAppWidgetText.setText(loadCountrName(CountrWidgetConfigureActivity.this, mAppWidgetId));
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -104,8 +101,11 @@ public class CountrWidgetConfigureActivity extends Activity {
             // When the button is clicked, store the string locally
             String countrName = curCountrName;
             long countrCurNum = curCountrNum;
-            long countrCurInterval = curCountrInterval; //TODO Send this shit through to the widget as well
-            saveTitlePref(context, mAppWidgetId, countrName, countrCurNum, countrCurInterval);
+            long countrCurInterval = curCountrInterval;
+            savePrefs(context, mAppWidgetId, countrName, countrCurNum, countrCurInterval);
+
+            CountrWidgetInstance c = new CountrWidgetInstance(countrName,countrCurNum,countrCurInterval,mAppWidgetId);
+            CountrWidget.addToList(c);
 
             // It is the responsibility of the configuration activity to update the app widget
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -120,11 +120,12 @@ public class CountrWidgetConfigureActivity extends Activity {
     };
 
     // Write the prefix to the SharedPreferences object for this widget
-    static void saveTitlePref(Context context, int appWidgetId, String name, long current, long interval) {
+    static void savePrefs(Context context, int appWidgetId, String name, long current, long interval) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_CUR_NAME + appWidgetId, name);
         prefs.putLong(PREF_CUR_NUM + appWidgetId, current);
         prefs.putLong(PREF_CUR_INTERVAL + appWidgetId, interval);
+        prefs.putInt(PREF_CUR_ID, appWidgetId);
         prefs.commit();
     }
 
@@ -145,9 +146,17 @@ public class CountrWidgetConfigureActivity extends Activity {
         return prefs.getLong(PREF_CUR_NUM + appWidgetId,-1);
     }
 
+    static Long loadCountrInterval(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        return prefs.getLong(PREF_CUR_INTERVAL + appWidgetId,-1);
+    }
+
     static void deleteTitlePref(Context context, int appWidgetId) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_CUR_NAME + appWidgetId);
+        prefs.remove(PREF_CUR_NUM + appWidgetId);
+        prefs.remove(PREF_CUR_INTERVAL + appWidgetId);
+        prefs.remove(PREF_CUR_ID);
         prefs.commit();
     }
 

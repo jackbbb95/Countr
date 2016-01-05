@@ -1,32 +1,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin" android:background="#FFFFFF"
+    android:padding="@dimen/widget_margin" android:background="#30000000"
     style="@style/AppTheme.Light.NoActionBar">
 
     <TextView android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:gravity="left"
-        android:textSize="@dimen/abc_text_size_title_material_toolbar"
-        android:textStyle="normal"
-        android:paddingRight="@dimen/abc_dialog_padding_material" />
+        android:textColor="#FFFFFF"
+        android:theme="@style/AppTheme.Light.NoActionBar"
+        android:textSize="@dimen/widget_name_text"
 
-    <ImageButton android:id="@+id/widget_change_button"
+        android:layout_above="@+id/widget_layout_helper"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageButton android:id="@+id/widget_plus_button"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/appwidget_text"
         android:src="@drawable/ic_countr_plus"
-        android:contentDescription="@string/count_button" />
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/count_button"
+
+        android:layout_below="@+id/widget_layout_helper"
+        android:layout_toEndOf="@+id/current_number_widget_tv"
+        android:layout_toRightOf="@+id/current_number_widget_tv"/>
+
+    <ImageButton android:id="@+id/widget_minus_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_countr_minus"
+        android:background="#00FFFFFF"
+        android:contentDescription="@string/count_button"
+
+        android:layout_below="@+id/widget_layout_helper"
+        android:layout_toStartOf="@+id/current_number_widget_tv"
+        android:layout_toLeftOf="@+id/current_number_widget_tv"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/current_number_widget_tv"
-        android:textColor="#000000"
-        android:gravity="right|center_vertical"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:textSize="@dimen/abc_text_size_headline_material"/>
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/widget_number_text"
+        android:theme="@style/AppTheme.Light.NoActionBar"
+
+        android:paddingLeft="@dimen/widget_spacing_vertical"
+        android:paddingRight="@dimen/widget_spacing_vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/widget_layout_helper"/>
+
+    <TextView
+        android:id="@+id/widget_layout_helper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>
